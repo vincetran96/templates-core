@@ -1,13 +1,13 @@
 import time
 import asyncio
-import random
-from collections import deque
 
 
 class GCRARateLimiter:
     '''Async rate-limiter using the GCRA algorithm
 
-    Applicable for rate-limiting requests to an API
+    - Applicable for rate-limiting requests to an API
+    - Has a smooth parameter to enable smoothing out the requests
+    - This algorithm jams the max number of requests at the beginning if smoothing is not enabled
 
     See GCRA explanation: https://blog.ian.stapletoncordas.co/2018/12/understanding-generic-cell-rate-limiting.html
 
@@ -17,13 +17,14 @@ class GCRARateLimiter:
         self,
         rate_limit: float,
         period: float=1.0,
+        smooth: bool=True
     ):
         '''
         :params:
-            `rate_limit_key`: unique key for this rate limiter
-            `rate_limit`:
-            `period`:
-            `redis_client`:
+            - `rate_limit_key`: unique key for this rate limiter
+            - `rate_limit`: number of allowed hits per period
+            - `period`: the length of period in seconds
+            - `smooth`: indicates whether to smooth out the requests
         '''
         if rate_limit <= 0:
             raise ValueError("param rate_limit must be greater than 0")
@@ -31,7 +32,7 @@ class GCRARateLimiter:
         self.period = period
         self.increment = self.period / self.rate_limit
         self.timestamp = None
-        # self.tasks = deque()
+        self.smooth = smooth
    
     def _is_limited(self):
         '''Checks if the requesting function is rate-limited
@@ -43,13 +44,20 @@ class GCRARateLimiter:
             if not self.timestamp:
                 self.timestamp = now
             tat = max(self.timestamp, now)
-            allowed_at = tat + self.increment - self.period
+            if not self.smooth:
+                allowed_at = tat + self.increment - self.period
+            else:
+                allowed_at = tat
             if now >= allowed_at:
                 new_tat = tat + self.increment
                 self.timestamp = new_tat
-                print(f"Request allowed at {now}, allowed ts at {allowed_at}")
+                print(
+                    f"Request allowed at {now}, allowed ts at {allowed_at}"
+                )
                 return (False, None)
-            print(f"Request rate-limited at {now}, allowed ts at {allowed_at}, wait for {allowed_at - now}")
+            print(
+                f"Request rate-limited at {now}, allowed ts at {allowed_at}, wait for {allowed_at - now}"
+            )
             return (True, allowed_at - now)
         except Exception as exc:
             print(f"GCRARateLimiter: EXCEPTION: {exc}")

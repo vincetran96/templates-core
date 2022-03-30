@@ -43,7 +43,7 @@ class TestGCRA:
 
             assert len(logs) <= rate_limit
 
-            # await asyncio.sleep(0.05)
+            await asyncio.sleep(0.05)
 
         for task in tasks:
             task.cancel()
