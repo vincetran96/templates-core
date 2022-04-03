@@ -43,14 +43,14 @@ class GCRARateLimiter:
         try:
             if not self.timestamp:
                 self.timestamp = now
-            tat = max(self.timestamp, now)
+            theory_arrival_time = max(self.timestamp, now)
             if not self.smooth:
-                allowed_at = tat + self.increment - self.period
+                allowed_at = theory_arrival_time + self.increment - self.period
             else:
-                allowed_at = tat
+                allowed_at = theory_arrival_time
             if now >= allowed_at:
-                new_tat = tat + self.increment
-                self.timestamp = new_tat
+                new_theory_arrival_time = theory_arrival_time + self.increment
+                self.timestamp = new_theory_arrival_time
                 print(
                     f"Request allowed at {now}, allowed ts at {allowed_at}"
                 )
