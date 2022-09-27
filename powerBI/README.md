@@ -10,7 +10,7 @@ Power BI template(s) with star schema modelling
 - `fPromo_Discount`: Promotion discount
 - `fSales`: Sales
 ### Measures
-- `z_Average Discount`
+- `Average Discount`
     - Key takeaways:
         - `_PromosWithLastCurrentDate`: Filter the `fPromo_Discount` for rows with `Start Date` and `End Date` that contain the `Current Date`
         - `_PromosCrossingDateRange`: Filter the `fPromo_Discount` for rows with `Start Date` and `End Date` that overlap the current Date range "context"
