@@ -46,10 +46,16 @@ PermitRootLogin prohibit-password
 - Restart ssh
 - `sudo systemctl reload sshd.service`
 - Or `sudo systemctl restart ssh`
-
-# Forward ssh port from model/router
+## Forward ssh port from model/router
 - Do this to allow ssh to Pi-hole server from outside LAN
 - Use the modem/router admin interface to forward a port (e.g., 60022) in router to port 22 in the Pi-hole local IP address
+## Try out ssh
+- Within LAN:
+    - `ssh userName@PiholeIP`
+- Use port 60022 if using a DDNS solution:
+    - `ssh -p 60022 userName@your_sub_domain.duckdns.org`
+- Within Wireguard VPN:
+    - `ssh username@PiholeWireguardIP`
 
 # Setup Wireguard to block ads outside network
 - https://docs.pi-hole.net/guides/vpn/wireguard/overview/
