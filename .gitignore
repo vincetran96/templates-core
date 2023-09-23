@@ -1,4 +1,6 @@
 .DS_Store
+*.parquet
+
 .pytest*/
 __pycache__/
 env/

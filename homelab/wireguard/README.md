@@ -1,0 +1,1 @@
+Set up a DDNS using DuckDNS or FreeDNS.Afraid
