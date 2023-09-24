@@ -57,7 +57,7 @@ PermitRootLogin prohibit-password
 - Within Wireguard VPN:
     - `ssh username@PiholeWireguardIP`
 
-# Setup Wireguard to block ads outside network
+# Setup Wireguard to block ads outside local network
 - https://docs.pi-hole.net/guides/vpn/wireguard/overview/
 - Setup wireguard
 - Forward a port (e.g., 60023) in router to port 60023 in the Pi-hole local IP
@@ -74,3 +74,12 @@ sudo ufw allow 60023/udp
 */5 * * * * /home/userName/freedns/freedns.sh > /dev/null 2>&1
 @reboot cd /home/userName/netcheck && yes n | ./netcheck.sh &
 ```
+
+# Setup Tailscale to block ads outside local network
+- https://tailscale.com/kb/1114/pi-hole/
+- See the `tailscale` dir for more info
+## Set Pi-hole server to listen on multiple interfaces
+- https://discourse.pi-hole.net/t/multiple-interfaces/1291/4
+- https://www.reddit.com/r/pihole/comments/59p3h8/comment/d9bcboh/
+- Create a file called `/etc/dnsmasq.d/99-interfaces.conf`
+- Add `interface=tailscale0` to the content
