@@ -1,0 +1,1 @@
+echo url="https://update.dedyn.io/?hostname=YOUR_HOSTNAME" | curl --header "Authorization: Token YOUR_TOKEN" -s -o ~/desec/desec.log -K -
