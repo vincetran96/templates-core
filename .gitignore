@@ -4,3 +4,4 @@
 .pytest*/
 __pycache__/
 env/
+*_cache/
