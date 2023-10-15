@@ -32,6 +32,19 @@ def bubble_sort(lst: List):
     swap()
     return lst
 
+def bubble_sort1(lst: List):
+    def swap(i_left: int=0, i_right: int=1):
+        if i_right == len(lst):
+            swap()
+        else:
+            if lst[i_left] > lst[i_right]:
+                lst[i_left], lst[i_right] = lst[i_right], lst[i_left]
+                swapped = True
+            swap(i_left + 1, i_right + 1)
+    
+    swap()
+    return lst
+
 
 if __name__ == "__main__":
     print(bubble_sort([3,2,1]))
