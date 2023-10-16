@@ -1,7 +1,7 @@
 from typing import List
 
 
-def bubble_sort(lst: List):
+def bubble_sort(lst: List[int]):
     '''I want to write a bubble sort function using recursion,
     instead of looping
     
@@ -20,6 +20,8 @@ def bubble_sort(lst: List):
     The sort is done in-place of the list
     '''
     def swap(i_left: int=0, i_right: int=1, swapped: bool=False):
+        '''Swap helper
+        '''
         if i_right == len(lst):
             if swapped:
                 swap()
@@ -32,19 +34,48 @@ def bubble_sort(lst: List):
     swap()
     return lst
 
-def bubble_sort1(lst: List):
-    def swap(i_left: int=0, i_right: int=1):
-        if i_right == len(lst):
-            swap()
-        else:
-            if lst[i_left] > lst[i_right]:
-                lst[i_left], lst[i_right] = lst[i_right], lst[i_left]
-                swapped = True
-            swap(i_left + 1, i_right + 1)
+
+def merge_sort(lst: List[int]):
+    '''A merge sort function using recursion
+
+    Define 2 auxiliary functions:
     
-    swap()
-    return lst
+    1. merge: It merges 2 already sorted lists into 1, very simple
+    2. sort:
+        - The idea of this function is to divide the list into
+        sub-lists until the sub-list reaches length <= 2, at
+        which point we call the `merge` function
+        - To divide, this function recursively calls itself
+        - Then finally there is the outer-most `merge` call
+
+    Returns a new sorted list
+    '''
+    def merge(l0: List[int], l1: List[int], result: List[int]):
+        '''Merges 2 sorted lists into 1
+        '''
+        if not l0 or not l1:
+            return result + l1 + l0
+        else:
+            if l0[0] < l1[0]:
+                _in = l0.pop(0)
+            else:
+                _in = l1.pop(0)
+            return merge(l0, l1, result + [_in])
+        
+    def sort(lst_: List[int]):
+        '''Sorts helper
+        
+        If the length <= 2, divide it then merge
+        '''
+        mid_idx = int((len(lst_) - 1) / 2) + 1
+        if len(lst_) <= 2:
+            return merge(lst_[0:mid_idx], lst_[mid_idx:], [])
+        else:
+            return merge(sort(lst_[0:mid_idx]), sort(lst_[mid_idx:]), [])
+        
+    return sort(lst)
 
 
 if __name__ == "__main__":
     print(bubble_sort([3,2,1]))
+    print(merge_sort([1000,1,5,3,15]))
