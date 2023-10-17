@@ -9,7 +9,7 @@
 # Commands
 ## Topics
 ```
-{PATH_TO_KAFKA_BINARY}/kafka-topics.sh \
+kafka-topics.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
     --create \
@@ -18,13 +18,13 @@
 ```
 
 ```
-{PATH_TO_KAFKA_BINARY}/kafka-topics.sh \
+kafka-topics.sh \
     --bootstrap-server localhost:9094 \
     --list
 ```
 
 ```
-{PATH_TO_KAFKA_BINARY}/kafka-topics.sh \
+kafka-topics.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
     --describe
@@ -32,7 +32,7 @@
 
 ## Messages
 ```
-{PATH_TO_KAFKA_BINARY}/kafka-console-producer.sh \
+kafka-console-producer.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
     --property "parse.key=true" \
@@ -40,7 +40,7 @@
 ```
 
 ```
-{PATH_TO_KAFKA_BINARY}/kafka-console-consumer.sh \
+kafka-console-consumer.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
     --from-beginning \
@@ -49,8 +49,9 @@
 ```
 
 ## Consumer group
+**Create consumer group**
 ```
-{PATH_TO_KAFKA_BINARY}/kafka-console-consumer.sh \
+kafka-console-consumer.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
     --group group0 \
@@ -59,11 +60,20 @@
     --property "key.separator=:"
 ```
 
+**Reset offsets**
 ```
-{PATH_TO_KAFKA_BINARY}/kafka-console-consumer.sh \
+kafka-console-consumer.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
     --group group0 \
     --reset-offset --to-earliest \
     --execute
+```
+
+**Describe offsets, etc. of consumer groups**
+```
+kafka-consumer-groups.sh \
+    --bootstrap-server localhost:9094 \
+    --describe \
+    --all-groups
 ```
