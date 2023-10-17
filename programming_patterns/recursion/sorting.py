@@ -31,7 +31,8 @@ def bubble_sort(lst: List[int]):
                 swapped = True
             swap(i_left + 1, i_right + 1, swapped)
     
-    swap()
+    if lst:
+        swap()
     return lst
 
 
@@ -77,4 +78,8 @@ def merge_sort(lst: List[int]):
 
 if __name__ == "__main__":
     print(bubble_sort([3,2,1]))
+    print(bubble_sort([1]))
+    print(bubble_sort([]))
     print(merge_sort([1000,1,5,3,7000,15,2]))
+    print(merge_sort([1]))
+    print(merge_sort([]))
