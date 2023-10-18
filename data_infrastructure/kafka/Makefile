@@ -22,10 +22,10 @@ setup_infras: setup_docker
 # setup: setup_python_env setup_infras
 
 docker_up:
-	@docker compose -f $(DOCKER_COMPOSE) up  -d
+	@docker compose -f $(DOCKER_COMPOSE) up -d
 
 docker_down:
-	@docker compose -f $(DOCKER_COMPOSE) down
+	@docker compose -f $(DOCKER_COMPOSE) down --remove-orphans
 
 docker_remove: 
 	@docker compose -f $(DOCKER_COMPOSE) down -v --rmi all

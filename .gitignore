@@ -1,5 +1,6 @@
 .DS_Store
 *.parquet
+.python-version
 
 .pytest*/
 __pycache__/

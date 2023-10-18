@@ -62,11 +62,11 @@ kafka-console-consumer.sh \
 
 **Reset offsets**
 ```
-kafka-console-consumer.sh \
+kafka-consumer-groups.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
     --group group0 \
-    --reset-offset --to-earliest \
+    --reset-offsets --to-earliest \
     --execute
 ```
 
