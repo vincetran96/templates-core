@@ -31,7 +31,8 @@ def bubble_sort(lst: List[int]):
                 swapped = True
             swap(i_left + 1, i_right + 1, swapped)
     
-    swap()
+    if lst:
+        swap()
     return lst
 
 
@@ -43,8 +44,8 @@ def merge_sort(lst: List[int]):
     1. merge: It merges 2 already sorted lists into 1, very simple
     2. sort:
         - The idea of this function is to divide the list into
-        sub-lists until the sub-list reaches length <= 2, at
-        which point we call the `merge` function
+        sub-lists until the sub-list reaches length <= 1, at
+        which point we return the sub-list
         - To divide, this function recursively calls itself
         - Then finally there is the outer-most `merge` call
 
@@ -67,15 +68,18 @@ def merge_sort(lst: List[int]):
         
         If the length <= 2, divide it then merge
         '''
+        if len(lst_) <= 1:
+            return lst_
         mid_idx = int((len(lst_) - 1) / 2) + 1
-        if len(lst_) <= 2:
-            return merge(lst_[0:mid_idx], lst_[mid_idx:], [])
-        else:
-            return merge(sort(lst_[0:mid_idx]), sort(lst_[mid_idx:]), [])
+        return merge(sort(lst_[0:mid_idx]), sort(lst_[mid_idx:]), [])
         
     return sort(lst)
 
 
 if __name__ == "__main__":
     print(bubble_sort([3,2,1]))
-    print(merge_sort([1000,1,5,3,15]))
+    print(bubble_sort([1]))
+    print(bubble_sort([]))
+    print(merge_sort([1000,1,5,3,7000,15,2]))
+    print(merge_sort([1]))
+    print(merge_sort([]))
