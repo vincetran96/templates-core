@@ -1,5 +1,6 @@
 import time
 import asyncio
+from asyncio import AbstractEventLoop
 
 
 class GCRARateLimiter:
@@ -12,16 +13,18 @@ class GCRARateLimiter:
     See GCRA explanation: https://blog.ian.stapletoncordas.co/2018/12/understanding-generic-cell-rate-limiting.html
 
     With reference to: https://github.com/hallazzang/asyncio-throttle
+
+    You may have to specify a rate-limit key to uniquely identify this rate-limiter
+    in some systems like Redis (?)
     '''
     def __init__(
         self,
         rate_limit: float,
-        period: float=1.0,
-        smooth: bool=True
+        period: float = 1.0,
+        smooth: bool = True
     ):
         '''
         :params:
-            - `rate_limit_key`: unique key for this rate limiter
             - `rate_limit`: number of allowed hits per period
             - `period`: the length of period in seconds
             - `smooth`: indicates whether to smooth out the requests
@@ -79,22 +82,24 @@ class GCRARateLimiter:
 
 
 # Test run
-async def worker(worker_no: int, throttler: GCRARateLimiter, n_repeat: int):
-    for _ in range(n_repeat):
+async def worker(
+    worker_no: int, throttler: GCRARateLimiter, n_repeat: int
+):
+    for n in range(n_repeat):
         # await asyncio.sleep(random.random() * 2)
         async with throttler:
-            print(f"Worker {worker_no} run! @ {time.time()}")
+            print(f"Worker {worker_no} run {n} time(s) @ {time.time()}")
 
 
-async def run():
-    throttler = GCRARateLimiter(10, 1)
-    tasks = [
-        loop.create_task(worker(no, throttler, 50))
-        for no in range(5)
-    ]
+async def run(loop: AbstractEventLoop):
+    throttler = GCRARateLimiter(100, 1)
+    tasks = list(
+        map(lambda i: loop.create_task(worker(i, throttler, 50)), range(5))
+    )
     await asyncio.wait(tasks)
 
+
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(run())
-    loop.close()
+    event_loop = asyncio.get_event_loop()
+    event_loop.run_until_complete(run(event_loop))
+    event_loop.close()
