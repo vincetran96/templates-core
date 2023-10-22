@@ -1,3 +1,17 @@
+'''I think I have to be very careful with how 
+Python changes the values inside collections
+(e.g., lists, etc.) because ideally functions
+that sort a list should not modify the original list
+
+But why do we want sorting functions to _not_ modify 
+the original list anyway? One reason can be because
+we want to keep the original list as a reference 
+after the sort. Another reason can be because we 
+want to write functions in as a "pure" manner as possible, 
+which means that for each input x, the function should 
+only output y, without changing x
+'''
+from copy import deepcopy
 from typing import List
 
 
@@ -17,24 +31,25 @@ def bubble_sort(lst: List[int]) -> List[int]:
     - If the right idx is in-bound, keep checking if swap is needed
     and flip the swap var if a swap action has been done
 
-    The sort is done in-place of the list
+    Returns a new sorted list
     '''
-    lst_copy = lst.copy()
+    lst_cp = deepcopy(lst)
     def swap(i_left: int=0, i_right: int=1, swapped: bool=False):
         '''Swap helper
         '''
-        if i_right == len(lst):
+        if i_right == len(lst_cp):
             if swapped:
                 swap()
         else:
-            if lst[i_left] > lst[i_right]:
-                lst[i_left], lst[i_right] = lst[i_right], lst[i_left]
+            if lst_cp[i_left] > lst_cp[i_right]:
+                lst_cp[i_left], lst_cp[i_right] = \
+                    lst_cp[i_right], lst_cp[i_left]
                 swapped = True
             swap(i_left + 1, i_right + 1, swapped)
     
-    if lst:
+    if lst_cp:
         swap()
-    return lst
+    return lst_cp
 
 
 def merge_sort(lst: List[int]) -> List[int]:
@@ -80,8 +95,9 @@ def merge_sort(lst: List[int]) -> List[int]:
 def selection_sort(lst: List[int]) -> List[int]:
     '''A selection sort function using recursion
     '''
+    lst_cp = deepcopy(lst)
     def _sort(start_idx: int, current_idx: int):
-
+        
 
 
 if __name__ == "__main__":
