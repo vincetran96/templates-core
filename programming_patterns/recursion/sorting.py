@@ -1,7 +1,7 @@
 from typing import List
 
 
-def bubble_sort(lst: List[int]):
+def bubble_sort(lst: List[int]) -> List[int]:
     '''I want to write a bubble sort function using recursion,
     instead of looping
     
@@ -19,6 +19,7 @@ def bubble_sort(lst: List[int]):
 
     The sort is done in-place of the list
     '''
+    lst_copy = lst.copy()
     def swap(i_left: int=0, i_right: int=1, swapped: bool=False):
         '''Swap helper
         '''
@@ -36,7 +37,7 @@ def bubble_sort(lst: List[int]):
     return lst
 
 
-def merge_sort(lst: List[int]):
+def merge_sort(lst: List[int]) -> List[int]:
     '''A merge sort function using recursion
 
     Define 2 auxiliary functions:
@@ -51,7 +52,7 @@ def merge_sort(lst: List[int]):
 
     Returns a new sorted list
     '''
-    def merge(l0: List[int], l1: List[int], result: List[int]):
+    def _merge(l0: List[int], l1: List[int], result: List[int]):
         '''Merges 2 sorted lists into 1
         '''
         if not l0 or not l1:
@@ -61,9 +62,9 @@ def merge_sort(lst: List[int]):
                 _in = l0.pop(0)
             else:
                 _in = l1.pop(0)
-            return merge(l0, l1, result + [_in])
+            return _merge(l0, l1, result + [_in])
         
-    def sort(lst_: List[int]):
+    def _sort(lst_: List[int]):
         '''Sorts helper
         
         If the length <= 2, divide it then merge
@@ -71,9 +72,16 @@ def merge_sort(lst: List[int]):
         if len(lst_) <= 1:
             return lst_
         mid_idx = int((len(lst_) - 1) / 2) + 1
-        return merge(sort(lst_[0:mid_idx]), sort(lst_[mid_idx:]), [])
+        return _merge(_sort(lst_[0:mid_idx]), _sort(lst_[mid_idx:]), [])
         
-    return sort(lst)
+    return _sort(lst)
+
+
+def selection_sort(lst: List[int]) -> List[int]:
+    '''A selection sort function using recursion
+    '''
+    def _sort(start_idx: int, current_idx: int):
+
 
 
 if __name__ == "__main__":
