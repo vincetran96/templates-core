@@ -94,16 +94,52 @@ def merge_sort(lst: List[int]) -> List[int]:
 
 def selection_sort(lst: List[int]) -> List[int]:
     '''A selection sort function using recursion
+
+    Define an auxiliary function `sort`
+
+    The idea is like so:
+    - Use 2 vars: start index and current index. The
+    starting index keeps track of the start of the 
+    "segment" to do the swapping. The current index keeps
+    track of the current element to compare with the element 
+    at the start of the segment
+    - If the element at the current index is less than 
+    the element at the start, swap them. Keep doing this 
+    until the current element reaches the end of the segment, 
+    at which point we move the start index forward and set the 
+    current index next to it
+
+    Returns a new sorted list
     '''
     lst_cp = deepcopy(lst)
-    def _sort(start_idx: int, current_idx: int):
-        
+    def _sort(start_idx: int = 0, current_idx: int = 1):
+        '''Sorts helper
+        '''
+        if start_idx < len(lst_cp) - 1:
+            if lst_cp[start_idx] > lst_cp[current_idx]:
+                lst_cp[start_idx], lst_cp[current_idx] = \
+                    lst_cp[current_idx], lst_cp[start_idx]
+            if current_idx == len(lst_cp) - 1:
+                _sort(start_idx + 1, start_idx + 2)
+            else:
+                _sort(start_idx, current_idx + 1)
+
+    if len(lst_cp) > 1:
+        _sort()
+    return lst_cp
 
 
 if __name__ == "__main__":
+    print("Bubble sort:")
     print(bubble_sort([3,2,1]))
     print(bubble_sort([1]))
     print(bubble_sort([]))
+    print("Merge sort:")
     print(merge_sort([1000,1,5,3,7000,15,2]))
     print(merge_sort([1]))
     print(merge_sort([]))
+    print("Selection sort:")
+    print(selection_sort([1000,1,5,3,7000,15,2]))
+    print(selection_sort([1000,1,-5,3,7000,15,2]))
+    print(selection_sort([1]))
+    print(selection_sort([]))
