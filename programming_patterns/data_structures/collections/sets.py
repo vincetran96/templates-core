@@ -1,6 +1,7 @@
 '''Sets data structures
 '''
 
+
 class UnionFind:
     '''Union-find or Disjoint Set Union (DSU) data structure.
 

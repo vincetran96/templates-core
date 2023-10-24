@@ -1,13 +1,18 @@
 '''Linked list containing integers
 '''
 
+
 class Node:
+    '''Container for data
+    '''
     def __init__(self, data: int) -> None:
         self.data = data
         self.next: Node = None # type: ignore
 
 
 class SinglyLinkedList:
+    '''Implementation of Singly Linked List
+    '''
     def __init__(self) -> None:
         self.head: Node = None # type: ignore
         self.tail: Node = None # type: ignore 
@@ -33,11 +38,10 @@ class SinglyLinkedList:
         return self.tail.data
 
     def display_as_str(self) -> str:
-        def _disp(node: Node, final_str: str="") -> str:
+        def _disp(node: Node, final_str: str = "") -> str:
             if node is None:
                 return final_str
-            else:
-                return _disp(node.next, final_str + ", " + str(node.data))
+            return _disp(node.next, final_str + ", " + str(node.data))
 
         return "[" + _disp(self.head).strip(", ") + "]"
 
