@@ -22,7 +22,7 @@ def _process_chunk(chunk: List[int]) -> None:
         _process(i)
 
 
-def loop(data: dict, chunksize: int = 5) -> None:
+def looper(data: dict, chunksize: int = 5) -> None:
     '''Uses loop to process data
     '''
     suffixes = []
@@ -61,5 +61,5 @@ def mapper(data: dict, chunksize: int = 5):
 
 
 if __name__ == "__main__":
-    loop(fake_data)
+    looper(fake_data)
     mapper(fake_data)
