@@ -1,4 +1,5 @@
-'''Log-Structured Merge Tree
+'''Log-Structured Merge Tree,
+used in databases like ClickHouse
 
 Some resources:
 - https://dev.to/creativcoder/what-is-a-lsm-tree-3d75
@@ -51,6 +52,35 @@ class LSMTree():
         with open(self.dbpath, "w", encoding="utf-8") as outfile:
             json.dump(self.memtable, outfile)
 
+    def shutdown(self):
+        '''Shuts down
+        '''
+        logging.debug("Event: Shutting down")
+        self.flush()
+
+    def startup(self):
+        '''Starts up by opening its existing dbfile
+        '''
+        logging.debug("Event: Starting up")
+        with open(self.dbpath, "r", encoding="utf-8") as infile:
+            self.memtable = json.load(infile)
+
+    def describe(self):
+        '''Describes itself
+        '''
+        print(self.memtable)
+
+    # For use as context manager
+    def __enter__(self):
+        self.startup()
+        return self
+
+    def __exit__(self, *_):
+        self.shutdown()
+
 
 if __name__ == "__main__":
-    t = LSMTree()
+    with LSMTree() as tree:
+        tree.set('a', 1)
+        tree.set('b', 2)
+        tree.describe()
