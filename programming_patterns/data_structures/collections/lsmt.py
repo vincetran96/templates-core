@@ -1,4 +1,10 @@
 '''Log-Structured Merge Tree
+
+Some resources:
+- https://dev.to/creativcoder/what-is-a-lsm-tree-3d75
+- https://careers.coccoc.com/blogs/from-log-structured-merge-tree-storage-engine-to-a-toy-database
+- https://github.com/wintdw/python-lsmtdb/blob/master/db.py
+- https://www.youtube.com/watch?v=I6jB0nM9SKU
 '''
 import json
 import logging
