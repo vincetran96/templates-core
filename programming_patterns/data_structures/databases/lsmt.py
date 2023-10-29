@@ -7,13 +7,15 @@ Some resources:
 - https://github.com/wintdw/python-lsmtdb/blob/master/db.py
 - https://www.youtube.com/watch?v=I6jB0nM9SKU
 '''
+import os
 import json
 import logging
 from pathlib import Path
+from pprint import pprint
 
 
 logging.basicConfig(level=logging.DEBUG)
-DBPATH = "temp/lsm"
+DBPATH = "temp/lsmt"
 
 
 class LSMTree():
@@ -32,9 +34,12 @@ class LSMTree():
         '''
         self.memtable = {}
         self.dbpath = dbpath
+        self.dbfile = dbpath + "/db"
+        self.jrnlfile = dbpath + "/journalfile"
 
-        Path(self.dbpath).parent.mkdir(exist_ok=True, parents=True)
-        Path(self.dbpath).touch(exist_ok=True)
+        Path(self.dbpath).mkdir(exist_ok=True, parents=True)
+        Path(self.dbfile).touch(exist_ok=True)
+        Path(self.jrnlfile).touch(exist_ok=True)
 
     def set(self, key: str, value: int):
         '''Public method to set key
@@ -49,7 +54,7 @@ class LSMTree():
     def flush(self):
         '''Flushes the memtable to the db file
         '''
-        with open(self.dbpath, "w", encoding="utf-8") as outfile:
+        with open(self.dbfile, "w", encoding="utf-8") as outfile:
             json.dump(self.memtable, outfile)
 
     def shutdown(self):
@@ -60,15 +65,19 @@ class LSMTree():
 
     def startup(self):
         '''Starts up by opening its existing dbfile
+
+        Only loads the persisted file if its size > 0
         '''
         logging.debug("Event: Starting up")
-        with open(self.dbpath, "r", encoding="utf-8") as infile:
-            self.memtable = json.load(infile)
+        if os.path.getsize(self.dbfile) > 0:
+            with open(self.dbfile, "r", encoding="utf-8") as infile:
+                data = json.load(infile)
+                self.memtable = data
 
     def describe(self):
         '''Describes itself
         '''
-        print(self.memtable)
+        pprint(self.memtable)
 
     # For use as context manager
     def __enter__(self):
