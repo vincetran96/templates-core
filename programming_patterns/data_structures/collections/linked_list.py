@@ -5,8 +5,8 @@
 class Node:
     '''Container for data
     '''
-    def __init__(self, data: int) -> None:
-        self.data = data
+    def __init__(self, value: int) -> None:
+        self.value = value
         self.next: Node = None # type: ignore
 
 
@@ -20,10 +20,10 @@ class SinglyLinkedList:
     def is_empty(self) -> bool:
         return self.head is None
 
-    def add(self, data: int) -> None:
+    def add(self, value: int) -> None:
         '''Adds Node at end
         '''
-        node = Node(data)
+        node = Node(value)
         if self.is_empty():
             self.head = node
             self.tail = node
@@ -32,16 +32,16 @@ class SinglyLinkedList:
             self.tail = node
 
     def get_head(self) -> int:
-        return self.head.data
+        return self.head.value
 
     def get_tail(self) -> int:
-        return self.tail.data
+        return self.tail.value
 
-    def display_as_str(self) -> str:
+    def __repr__(self) -> str:
         def _disp(node: Node, final_str: str = "") -> str:
             if node is None:
                 return final_str
-            return _disp(node.next, final_str + ", " + str(node.data))
+            return _disp(node.next, final_str + ", " + str(node.value))
 
         return "[" + _disp(self.head).strip(", ") + "]"
 
@@ -56,9 +56,11 @@ if __name__ == "__main__":
     print(f">> sl head={sl.get_head()}, sl tail={sl.get_tail()}")
     sl.add(2)
     print(f">> sl head={sl.get_head()}, sl tail={sl.get_tail()}")
-    print(f"sl head.next={sl.head.next.data}")
-    print(f"sl as string={sl.display_as_str()}")
+    print(f"sl head.next={sl.head.next.value}")
+    print("sl as string:")
+    print(sl)
     sl.add(3)
     print(f">> sl head={sl.get_head()}, sl tail={sl.get_tail()}")
-    print(f"sl head.next={sl.head.next.data}")
-    print(f"sl as string={sl.display_as_str()}")
+    print(f"sl head.next={sl.head.next.value}")
+    print("sl as string:")
+    print(sl)
