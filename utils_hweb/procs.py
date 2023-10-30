@@ -1,5 +1,5 @@
-'''Processing
-'''
+"""Processing
+"""
 from billiard import Pool
 
 
@@ -12,8 +12,8 @@ def part_crack_helper(args):
 
 
 class Worker():
-    '''Terminates pool when a work finishes job
-    '''
+    """Terminates pool when a work finishes job
+    """
     def __init__(self, n_workers, initializer, initargs):
         self.pool = Pool(
             processes=n_workers, 

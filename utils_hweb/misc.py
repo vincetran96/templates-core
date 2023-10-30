@@ -1,9 +1,9 @@
-'''Misc utils
-'''
+"""Misc utils
+"""
 
 def flatten_list(lst):
-    '''Flattens a nested list, with any level
-    '''
+    """Flattens a nested list, with any level
+    """
     flattened = []
     for item in lst:
         if isinstance(item, list):

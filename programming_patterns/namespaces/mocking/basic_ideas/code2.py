@@ -1,6 +1,6 @@
-'''To run this, do
+"""To run this, do
 PYTHONPATH='.' python code1.py
-'''
+"""
 import to_import as ti
 
 

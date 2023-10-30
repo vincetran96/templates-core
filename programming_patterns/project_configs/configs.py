@@ -1,5 +1,5 @@
-'''Template for creating project configs
-'''
+"""Template for creating project configs
+"""
 import os
 from enum import Enum
 
@@ -7,31 +7,31 @@ from airflow.models import Variable
 
 
 class OsVar(Enum):
-    '''OS variables
-    '''
+    """OS variables
+    """
     CURRENT_USER_HOME = "HOME"
     DBHOST = "DBHOST"
 
 
 class AirflowVar(Enum):
-    '''Airflow variables
-    '''
+    """Airflow variables
+    """
     DB_INTERFACE = "DB_INTERFACE"
 
 
 class Configs:
-    '''Class to get config variables
-    '''
+    """Class to get config variables
+    """
     @staticmethod
     def get_os_var(var: str):
-        '''Gets OS variable
-        '''
+        """Gets OS variable
+        """
         return os.getenv(var)
 
     @staticmethod
     def get_airflow_var(var: str):
-        '''Gets Airflow variable
-        '''
+        """Gets Airflow variable
+        """
         return Variable.get(var)
 
 

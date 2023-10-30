@@ -2,13 +2,13 @@ from typing import List
 
 
 def find_max(lst: List[int]) -> int:
-    '''Finds largest int in list
+    """Finds largest int in list
 
     Raises an IndexError if the list is empty
-    '''
+    """
     def find(last_val: int, idx: int = 0) -> int:
-        '''Finder helper
-        '''
+        """Finder helper
+        """
         if lst[idx] > last_val:
             last_val = lst[idx]
         if idx == len(lst) - 1:

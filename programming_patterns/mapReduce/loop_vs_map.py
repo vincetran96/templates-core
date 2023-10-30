@@ -1,5 +1,5 @@
-'''Compares code style between looping and mapping
-'''
+"""Compares code style between looping and mapping
+"""
 from typing import List
 
 
@@ -9,22 +9,22 @@ fake_data[1000] = "broken"
 
 
 def _process(i: int) -> None:
-    '''Creates some side effect instead of
+    """Creates some side effect instead of
     returning a value
-    '''
+    """
     print(f"Processed {i}")
 
 
 def _process_chunk(chunk: List[int]) -> None:
-    '''Processes a chunk of data
-    '''
+    """Processes a chunk of data
+    """
     for i in chunk:
         _process(i)
 
 
 def looper(data: dict, chunksize: int = 5) -> None:
-    '''Uses loop to process data
-    '''
+    """Uses loop to process data
+    """
     suffixes = []
     for _, value in data.items():
         try:
@@ -39,11 +39,11 @@ def looper(data: dict, chunksize: int = 5) -> None:
 
 
 def mapper(data: dict, chunksize: int = 5):
-    '''Users map to process data
-    '''
+    """Users map to process data
+    """
     def generate():
-        '''Generates lists of data
-        '''
+        """Generates lists of data
+        """
         suffixes = []
         for _, value in data.items():
             try:

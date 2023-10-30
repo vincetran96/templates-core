@@ -1,9 +1,9 @@
-'''Sets data structures
-'''
+"""Sets data structures
+"""
 
 
 class UnionFind:
-    '''Union-find or Disjoint Set Union (DSU) data structure.
+    """Union-find or Disjoint Set Union (DSU) data structure.
 
     Based on Josiah Carlson's code,
     http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/215912
@@ -21,17 +21,17 @@ class UnionFind:
     - X.union(item1, item2, ...) merges the sets containing each item
       into a single larger set.  If any item is not yet part of a set
       in X, it is added to X as one of the members of the merged set.
-    '''
+    """
 
     def __init__(self):
-        '''Creates a new empty union-find structure.
-        '''
+        """Creates a new empty union-find structure.
+        """
         self.weights = {}
         self.parents = {}
 
     def __getitem__(self, obj):
-        '''Finds and return the name of the set containing the object.
-        '''
+        """Finds and return the name of the set containing the object.
+        """
         # check for previously unknown object
         if obj not in self.parents:
             self.parents[obj] = obj
@@ -51,13 +51,13 @@ class UnionFind:
         return root
 
     def __iter__(self):
-        '''Iterates through all items ever found or unioned by this structure.
-        '''
+        """Iterates through all items ever found or unioned by this structure.
+        """
         return iter(self.parents)
 
     def union(self, *objects):
-        '''Finds the sets containing the objects and merge them all.
-        '''
+        """Finds the sets containing the objects and merge them all.
+        """
         roots = [self[x] for x in objects]
         heaviest = max([(self.weights[r],r) for r in roots])[1]
         for r in roots:

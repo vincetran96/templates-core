@@ -1,5 +1,5 @@
-'''Passwords and other configs
-'''
+"""Passwords and other configs
+"""
 import sys
 import os
 from pathlib import Path

@@ -1,16 +1,16 @@
-'''Kafka Consumer sample
+"""Kafka Consumer sample
 
 Here we use the `closing` class from contextlib
 and use a context maneger to properly close the consumer instance
-'''
+"""
 from contextlib import closing
 
 from kafka import KafkaConsumer
 
 
 def main():
-    '''Main program
-    '''
+    """Main program
+    """
     def create_consumer(topic: str) -> closing[KafkaConsumer]:
         return closing(
             KafkaConsumer(

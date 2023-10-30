@@ -1,5 +1,5 @@
-'''Dataclasses may be useful when processing complex data
-'''
+"""Dataclasses may be useful when processing complex data
+"""
 from dataclasses import dataclass
 from typing import List
 

@@ -1,4 +1,4 @@
-'''Log-Structured Merge Tree,
+"""Log-Structured Merge Tree,
 used in databases like ClickHouse
 
 Some resources:
@@ -6,7 +6,7 @@ Some resources:
 - https://careers.coccoc.com/blogs/from-log-structured-merge-tree-storage-engine-to-a-toy-database
 - https://github.com/wintdw/python-lsmtdb/blob/master/db.py
 - https://www.youtube.com/watch?v=I6jB0nM9SKU
-'''
+"""
 import os
 import json
 import logging
@@ -19,19 +19,19 @@ DBPATH = "temp/lsmt"
 
 
 class LSMTree():
-    '''Implementation of LSMTree
+    """Implementation of LSMTree
 
     - Keys: str
     - Values: int
-    '''
+    """
     def __init__(self, dbpath: str = DBPATH):
-        '''Creates a LSMTree
+        """Creates a LSMTree
 
         ---
         params
         ---
             - dbpath (str): Path to the db file
-        '''
+        """
         self.memtable = {}
         self.dbpath = dbpath
         self.dbfile = dbpath + "/db"
@@ -42,32 +42,32 @@ class LSMTree():
         Path(self.jrnlfile).touch(exist_ok=True)
 
     def set(self, key: str, value: int):
-        '''Public method to set key
-        '''
+        """Public method to set key
+        """
         self.memtable[key] = value
 
     def get(self, key: str):
-        '''Public method to get key
-        '''
+        """Public method to get key
+        """
         return self.memtable.get(key, None)
 
     def flush(self):
-        '''Flushes the memtable to the db file
-        '''
+        """Flushes the memtable to the db file
+        """
         with open(self.dbfile, "w", encoding="utf-8") as outfile:
             json.dump(self.memtable, outfile)
 
     def shutdown(self):
-        '''Shuts down
-        '''
+        """Shuts down
+        """
         logging.debug("Event: Shutting down")
         self.flush()
 
     def startup(self):
-        '''Starts up by opening its existing dbfile
+        """Starts up by opening its existing dbfile
 
         Only loads the persisted file if its size > 0
-        '''
+        """
         logging.debug("Event: Starting up")
         if os.path.getsize(self.dbfile) > 0:
             with open(self.dbfile, "r", encoding="utf-8") as infile:
@@ -75,8 +75,8 @@ class LSMTree():
                 self.memtable = data
 
     def describe(self):
-        '''Describes itself
-        '''
+        """Describes itself
+        """
         pprint(self.memtable)
 
     # For use as context manager

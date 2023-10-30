@@ -1,4 +1,4 @@
-'''I think I have to be very careful with how 
+"""I think I have to be very careful with how 
 Python changes the values inside collections
 (e.g., lists, etc.) because ideally functions
 that sort a list should not modify the original list
@@ -10,13 +10,13 @@ after the sort. Another reason can be because we
 want to write functions in as a "pure" manner as possible, 
 which means that for each input x, the function should 
 only output y, without changing x
-'''
+"""
 from copy import deepcopy
 from typing import List
 
 
 def bubble_sort(lst: List[int]) -> List[int]:
-    '''I want to write a bubble sort function using recursion,
+    """I want to write a bubble sort function using recursion,
     instead of looping
     
     Define an auxiliary func `swap`
@@ -32,11 +32,11 @@ def bubble_sort(lst: List[int]) -> List[int]:
     and flip the swap var if a swap action has been done
 
     Returns a new sorted list
-    '''
+    """
     lst_cp = deepcopy(lst)
     def swap(i_left: int=0, i_right: int=1, swapped: bool=False):
-        '''Swap helper
-        '''
+        """Swap helper
+        """
         if i_right == len(lst_cp):
             if swapped:
                 swap()
@@ -53,7 +53,7 @@ def bubble_sort(lst: List[int]) -> List[int]:
 
 
 def merge_sort(lst: List[int]) -> List[int]:
-    '''A merge sort function using recursion
+    """A merge sort function using recursion
 
     Define 2 auxiliary functions:
     
@@ -66,10 +66,10 @@ def merge_sort(lst: List[int]) -> List[int]:
         - Then finally there is the outer-most `merge` call
 
     Returns a new sorted list
-    '''
+    """
     def _merge(l0: List[int], l1: List[int], result: List[int]):
-        '''Merges 2 sorted lists into 1
-        '''
+        """Merges 2 sorted lists into 1
+        """
         if not l0 or not l1:
             return result + l1 + l0
         else:
@@ -80,10 +80,10 @@ def merge_sort(lst: List[int]) -> List[int]:
             return _merge(l0, l1, result + [_in])
         
     def _sort(lst_: List[int]):
-        '''Sorts helper
+        """Sorts helper
         
         If the length <= 2, divide it then merge
-        '''
+        """
         if len(lst_) <= 1:
             return lst_
         mid_idx = int((len(lst_) - 1) / 2) + 1
@@ -93,7 +93,7 @@ def merge_sort(lst: List[int]) -> List[int]:
 
 
 def selection_sort(lst: List[int]) -> List[int]:
-    '''A selection sort function using recursion
+    """A selection sort function using recursion
 
     Define an auxiliary function `sort`
 
@@ -110,11 +110,11 @@ def selection_sort(lst: List[int]) -> List[int]:
     current index next to it
 
     Returns a new sorted list
-    '''
+    """
     lst_cp = deepcopy(lst)
     def _sort(start_idx: int = 0, current_idx: int = 1):
-        '''Sorts helper
-        '''
+        """Sorts helper
+        """
         if start_idx < len(lst_cp) - 1:
             if lst_cp[start_idx] > lst_cp[current_idx]:
                 lst_cp[start_idx], lst_cp[current_idx] = \

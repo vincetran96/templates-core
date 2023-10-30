@@ -1,5 +1,5 @@
-'''ClickHouse utils
-'''
+"""ClickHouse utils
+"""
 import requests
 import http.client
 from requests import Response
@@ -24,7 +24,7 @@ def execute_clickhouse_query(
     external_file_cols: dict = None,
     stream: bool = False
 ):
-    '''
+    """
     Experimental feature: external file
 
     Resources:
@@ -55,7 +55,7 @@ def execute_clickhouse_query(
         - external_file_cols: dict of cols and ClickHouse dtype for each
             For example: `external_file_cols = {'domain': 'String', 'traffic': 'UInt32'}`
         - stream: whether to stream response
-    '''
+    """
     params = {
         'query': query,
         'database': database,
@@ -89,10 +89,10 @@ def execute_clickhouse_query(
 def get_clickhouse_data(
         query, external_file: str = None, external_file_cols: dict = None, stream: bool = False
     ) -> Response:
-    '''Gets data from ClickHouse as text
+    """Gets data from ClickHouse as text
 
     Returns a Response object (in case you need to stream it)
-    '''
+    """
     resp = execute_clickhouse_query(
         query, CLICKHOUSE_USER, CLICKHOUSE_PASSWORD, CH_PROD_HOST, DATABASE, TIMEOUT,
         external_file=external_file, external_file_cols=external_file_cols,
@@ -104,11 +104,11 @@ def get_clickhouse_data(
     raise ValueError(resp.text)
 
 def gen_dates_back(ddate: str, n_dates: int):
-    '''Generates dates from ddate going back n_dates;
+    """Generates dates from ddate going back n_dates;
 
     Returns a list of strings representing dates
     sorted ascendingly
-    '''
+    """
     check_ddate = True
     if ddate != "yesterday":
         try:
@@ -125,7 +125,7 @@ def gen_dates_back(ddate: str, n_dates: int):
     return sorted(set(dates_arr))
 
 def get_yesterday():
-    '''Gets the date representing yesterday() in CH
-    '''
+    """Gets the date representing yesterday() in CH
+    """
     data = get_clickhouse_data("select yesterday()").text
     return data.strip()

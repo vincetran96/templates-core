@@ -1,6 +1,6 @@
 def get_all_subsequences_recursive(A: list):
-    '''Recursive method
-    '''
+    """Recursive method
+    """
     if len(A) <= 1:
         return [[], A]
     elif len(A) == 2:
@@ -12,8 +12,8 @@ def get_all_subsequences_recursive(A: list):
 
 
 def get_all_subsequences(A: list):
-    '''Iterative method
-    '''
+    """Iterative method
+    """
     subseqs = [[]]
     for element in A:
         additional_subseqs = []
@@ -26,8 +26,8 @@ def get_all_subsequences(A: list):
 
 
 def get_all_increasing_subsequences_recursive(A: list):
-    '''Recursive method
-    '''
+    """Recursive method
+    """
     if len(A) <= 1:
         return [[], A]
     elif len(A) == 2:
@@ -44,8 +44,8 @@ def get_all_increasing_subsequences_recursive(A: list):
 
 
 def get_all_increasing_subsequences(A: list):
-    '''Iterative method
-    '''
+    """Iterative method
+    """
     subseqs = [[]]
     for element in A:
         additional_subseqs = []

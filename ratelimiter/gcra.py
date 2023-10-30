@@ -4,7 +4,7 @@ from asyncio import AbstractEventLoop
 
 
 class GCRARateLimiter:
-    '''Async rate-limiter using the GCRA algorithm
+    """Async rate-limiter using the GCRA algorithm
 
     - Applicable for rate-limiting requests to an API
     - Has a smooth parameter to enable smoothing out the requests
@@ -16,19 +16,19 @@ class GCRARateLimiter:
 
     You may have to specify a rate-limit key to uniquely identify this rate-limiter
     in some systems like Redis (?)
-    '''
+    """
     def __init__(
         self,
         rate_limit: float,
         period: float = 1.0,
         smooth: bool = True
     ):
-        '''
+        """
         :params:
             - `rate_limit`: number of allowed hits per period
             - `period`: the length of period in seconds
             - `smooth`: indicates whether to smooth out the requests
-        '''
+        """
         if rate_limit <= 0:
             raise ValueError("param rate_limit must be greater than 0")
         self.rate_limit = rate_limit
@@ -38,10 +38,10 @@ class GCRARateLimiter:
         self.smooth = smooth
    
     def _is_limited(self):
-        '''Checks if the requesting function is rate-limited
+        """Checks if the requesting function is rate-limited
 
         Source: https://dev.to/astagi/rate-limiting-using-python-and-redis-58gk
-        '''
+        """
         now = time.time() # maybe consider time.monotonic()
         try:
             if not self.timestamp:
@@ -65,8 +65,8 @@ class GCRARateLimiter:
             return (True, self.increment)
 
     async def wait(self):
-        '''API call to wait until the requesting function is not rate-limited
-        '''
+        """API call to wait until the requesting function is not rate-limited
+        """
 
         while True:
             limited, retry_after = self._is_limited()

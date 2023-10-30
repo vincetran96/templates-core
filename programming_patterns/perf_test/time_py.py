@@ -1,5 +1,5 @@
-'''Tests time functions
-'''
+"""Tests time functions
+"""
 import timeit
 
 

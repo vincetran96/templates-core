@@ -1,11 +1,11 @@
-'''Datetime utils
-'''
+"""Datetime utils
+"""
 from datetime import datetime, timedelta
 from utils.configs import DATE_FORMAT
 
 
 def generate_dates(start: str, end: str, format=DATE_FORMAT):
-    '''Generates dates between two dates (inclusive)
+    """Generates dates between two dates (inclusive)
 
     Returns a list of string representing the dates
 
@@ -18,7 +18,7 @@ def generate_dates(start: str, end: str, format=DATE_FORMAT):
     Useful when getting daily data (e.g., event_date = ...)
 
     >>> generate_dates('2023-01-01', '2023-01-31')
-    '''
+    """
     start_date = datetime.strptime(start, format)
     end_date = datetime.strptime(end, format)
     check = end_date >= start_date
@@ -34,7 +34,7 @@ def generate_dates(start: str, end: str, format=DATE_FORMAT):
     return dates
 
 def generate_dates_step(start: str, end: str, step: int, format=DATE_FORMAT):
-    '''Generate dates between two dates (inclusive), with step as number of days;
+    """Generate dates between two dates (inclusive), with step as number of days;
     Does not go pass the end date
 
     Returns a list of tuples of string representing the start, end dates for each period
@@ -50,7 +50,7 @@ def generate_dates_step(start: str, end: str, step: int, format=DATE_FORMAT):
 
     generate_dates_step('2023-01-01', '2023-01-31', 6)
     [(2023-01-01, 2023-01-07), ..., (2023-01-29, 2023-01-31)]
-    '''
+    """
     start_date = datetime.strptime(start, format)
     max_date = datetime.strptime(end, format)
     check = max_date >= start_date and step >= 0
@@ -75,16 +75,16 @@ def generate_dates_step(start: str, end: str, step: int, format=DATE_FORMAT):
     return dates
 
 def date_to_str(d: datetime, format=DATE_FORMAT):
-    '''Date to str of format
-    '''
+    """Date to str of format
+    """
     return d.strftime(format)
 
 def str_to_date(str: str, format=DATE_FORMAT):
-    '''Str to date of format
-    '''
+    """Str to date of format
+    """
     return datetime.strptime(str, format)
 
 def now():
-    '''Returns datetime of now
-    '''
+    """Returns datetime of now
+    """
     return datetime.now()

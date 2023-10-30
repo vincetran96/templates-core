@@ -1,4 +1,4 @@
-'''If you run this script in its current dir, Python will complain:
+"""If you run this script in its current dir, Python will complain:
 ModuleNotFoundError: No module named 'programming_patterns'
 
 One way to run the main function in this file is to create a .py
@@ -10,7 +10,7 @@ from programming_patterns.namespaces.import_modules import main
 
 main()
 ```
-'''
+"""
 from programming_patterns.recursion.sorting import merge_sort
 
 

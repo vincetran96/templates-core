@@ -1,5 +1,5 @@
-'''IO utils
-'''
+"""IO utils
+"""
 import sys
 import os
 import time
@@ -30,10 +30,10 @@ def is_iterable(var):
         return False
 
 def read_stdin_batch(batch_size: int=10000):
-    '''Reads stdin in batches of lines
+    """Reads stdin in batches of lines
 
     Returns a generator of list of strings
-    '''
+    """
     i = 0
     line_arr = []
     while True:
@@ -49,7 +49,7 @@ def read_stdin_batch(batch_size: int=10000):
         i += 1
 
 def read_text_batch(path: Union[str,Path,Iterable], batch_size: int=10000):
-    '''Reads content of a text file in batches of lines
+    """Reads content of a text file in batches of lines
 
     Returns a generator of list of strings
 
@@ -57,7 +57,7 @@ def read_text_batch(path: Union[str,Path,Iterable], batch_size: int=10000):
     :params:
     ---
         - path: str - full path to the text file OR iterable - file paths
-    '''
+    """
     line_generator = readline_files(path)
     line_arr = []
     while True:
@@ -75,7 +75,7 @@ def read_text_batch(path: Union[str,Path,Iterable], batch_size: int=10000):
 def readline_files(
     path: Union[str,Path,Iterable], separator: str=None, encoding: str="utf-8"
 ):
-    '''Reads lines from multiple text files or a text file
+    """Reads lines from multiple text files or a text file
     
     Returns a generator of strings, or of tuples of strings if seperator is provided;
     Please note that among the fields yielded, only the last field contains
@@ -86,7 +86,7 @@ def readline_files(
     ---
         - path: str - full path to the text file OR iterable - file paths
         - separator: str - field separator of the file
-    '''
+    """
     if separator and not isinstance(separator, str):
         raise TypeError("Separator must be string")
     
@@ -108,7 +108,7 @@ def readlines_file(
     path: Union[str,Path], n_shuff: int=None,
     seed: Hashable=None, encoding: str="utf-8"
 ):
-    '''Reads all lines from a text file; You can optionally only
+    """Reads all lines from a text file; You can optionally only
     read a random set of `n_shuff` lines
 
     Returns a list of lines
@@ -117,7 +117,7 @@ def readlines_file(
     :params:
     ---
         - seed: Hashable - seed for the random generator
-    '''
+    """
     with open(path, 'r', encoding=encoding) as infile:
         lines = infile.readlines()
         if n_shuff:
@@ -132,7 +132,7 @@ def write_text_data(
     data: str, encoding="utf-8",
     chunksize: int=None, overwrite: bool=False
 ):
-    '''Writes text data to a file
+    """Writes text data to a file
 
     Mode must be = a if want to write in chunks
 
@@ -142,7 +142,7 @@ def write_text_data(
     :params:
     ---
         - chunksize: a chunk in bytes
-    '''
+    """
     ppath = Path(path)
     ppath.parent.mkdir(parents=True, exist_ok=True)
     if chunksize:
@@ -160,7 +160,7 @@ def write_response_data(
     response: Response, encoding="utf-8",
     chunksize: int=READ_CHUNKSIZE, overwrite: bool=False
 ):
-    '''Writes a Requests **text** response data to a file
+    """Writes a Requests **text** response data to a file
 
     Default is to write in chunks; Mode must be = a if write in chunks
 
@@ -170,7 +170,7 @@ def write_response_data(
     :params:
     ---
         - encoding: str - encoding of the response object
-    '''
+    """
     response.encoding = encoding
 
     # It's OK to wrap Path() around a Path object as it returns the same path
@@ -187,8 +187,8 @@ def write_response_data(
     # print(f"Wrote data to: {path}")
 
 def write_list_data(path: Union[str,Path], data: list, overwrite: bool=False):
-    '''Writes a list of strings to a file
-    '''
+    """Writes a list of strings to a file
+    """
     ppath = Path(path)
     ppath.parent.mkdir(parents=True, exist_ok=True)
     with atomic_save(str(path), text_mode=True, overwrite=overwrite) as outfile:
@@ -196,27 +196,27 @@ def write_list_data(path: Union[str,Path], data: list, overwrite: bool=False):
             outfile.write(string_)
 
 def file_time_comp(expire_time: int):
-    '''Returns a string representing the time component
+    """Returns a string representing the time component
     to attach to a filename;
 
     It simply divides the current time in epoch seconds by the `expire_time`,
     to get an integer indicating if the file is "expired"
-    '''
+    """
     return str(int(time.time()/expire_time))
 
 def filesize(path: Union[str,Path]):
-    '''Returns the file size in bytes
+    """Returns the file size in bytes
 
     Will raise an exception if the file does not exist
-    '''
+    """
     ppath = Path(path)
     return ppath.stat().st_size
 
 def copy_files(source_paths: Iterable, dest_path: Union[str,Path]):
-    '''Copies source files to destination
+    """Copies source files to destination
 
     Returns the destination path
-    '''
+    """
     source_paths = flatten_list(source_paths)
     Path(dest_path).mkdir(parents=True, exist_ok=True)
     for source in source_paths:
@@ -225,19 +225,19 @@ def copy_files(source_paths: Iterable, dest_path: Union[str,Path]):
     return dest_path
 
 def list_files_dir(dir: Union[str,Path], rglob_patt: str="*"):
-    '''Lists files in directory
+    """Lists files in directory
     
     ---
     :params:
     ---
         - rglob_patt: pattern for file
-    '''
+    """
     dir = Path(dir)
     return dir.rglob(rglob_patt)
 
 def remove_allFiles_dir(dir: Union[str,Path]):
-    '''Removes all files from dir
-    '''
+    """Removes all files from dir
+    """
     dir = Path(dir)
     for path in dir.rglob("*"):
         if path.is_file():
@@ -246,7 +246,7 @@ def remove_allFiles_dir(dir: Union[str,Path]):
 async def download_file_url(
     url, dest: Union[str,Path], overwrite: bool=True
 ):
-    '''Async downloads file from url
+    """Async downloads file from url
 
     Returns the full path to the file
     
@@ -255,7 +255,7 @@ async def download_file_url(
     ---
         - dest: Destination
         - overwrite: bool - whether to overwrite the file if it exists in dest
-    '''
+    """
     dest = Path(dest)
     dest.mkdir(parents=True, exist_ok=True)
 
@@ -274,7 +274,7 @@ async def download_file_url(
 async def download_files_url(
     urls: list, dest: Union[str,Path], overwrite: bool=True, timeout: int=7200
 ):
-    '''Async downloads files from urls
+    """Async downloads files from urls
 
     Returns the dest
 
@@ -284,7 +284,7 @@ async def download_files_url(
         - dest: Destination
         - overwrite: bool - whether to overwrite the file if it exists in dest
         - timeout: int - timeout to wait for the download tasks (default 2 hours)
-    '''
+    """
     dest = Path(dest)
 
     # task_arr = [ raiser(x) for x in range(10) ]
@@ -308,7 +308,7 @@ async def download_files_url(
     return dest
 
 def get_filelinks_url(url: str, fullpath: bool=True):
-    '''Gets file links from an URL
+    """Gets file links from an URL
 
     Setting fullpath = False has not been tested
 
@@ -316,7 +316,7 @@ def get_filelinks_url(url: str, fullpath: bool=True):
     :params:
     ---
         - fullpath: bool - whether to get the full path to each file
-    '''
+    """
     resp = requests.get(url)
     resp.raise_for_status()
     if resp.status_code == 200:
@@ -332,13 +332,13 @@ def get_filelinks_url(url: str, fullpath: bool=True):
         return filelinks
 
 def file_exists(filepath: Union[str,Path]):
-    '''Checks if a file exists
-    '''
+    """Checks if a file exists
+    """
     return Path(filepath).is_file()
 
 def files_exist(filepaths: Iterable[Union[str,Path]]):
-    '''Checks for the existence of multiple files
-    '''
+    """Checks for the existence of multiple files
+    """
     for filepath in filepaths:
         if not file_exists(filepath):
             return False

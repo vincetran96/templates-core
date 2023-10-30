@@ -1,13 +1,13 @@
-'''Kafka Producer sample
-'''
+"""Kafka Producer sample
+"""
 from kafka import KafkaProducer
 
 from config import BOOTSTRAP_SERVER
 
 
 def main():
-    '''Main program
-    '''
+    """Main program
+    """
     producer = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVER)
     topic = "topic0"
     key = b"greeting"

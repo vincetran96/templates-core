@@ -1,18 +1,18 @@
-'''Linked list containing integers
-'''
+"""Linked list containing integers
+"""
 
 
 class Node:
-    '''Container for data
-    '''
+    """Container for data
+    """
     def __init__(self, value: int) -> None:
         self.value = value
         self.next: Node = None # type: ignore
 
 
 class SinglyLinkedList:
-    '''Implementation of Singly Linked List
-    '''
+    """Implementation of Singly Linked List
+    """
     def __init__(self) -> None:
         self.head: Node = None # type: ignore
         self.tail: Node = None # type: ignore 
@@ -21,8 +21,8 @@ class SinglyLinkedList:
         return self.head is None
 
     def add(self, value: int) -> None:
-        '''Adds Node at end
-        '''
+        """Adds Node at end
+        """
         node = Node(value)
         if self.is_empty():
             self.head = node

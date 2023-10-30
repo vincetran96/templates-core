@@ -1,11 +1,11 @@
-'''Binary tree containing integers
-'''
+"""Binary tree containing integers
+"""
 from typing import Tuple
 
 
 class Node:
-    '''Container for data
-    '''
+    """Container for data
+    """
     def __init__(self, value: int) -> None:
         self.value = value
         self.left: Node = None
@@ -13,8 +13,8 @@ class Node:
 
 
 class Tree:
-    '''Rough implementation of Binary Tree
-    '''
+    """Rough implementation of Binary Tree
+    """
     def __init__(self, root_value: int = None):
         root: Node = None
         if root_value:
@@ -25,13 +25,13 @@ class Tree:
         self, value: int,
         node: Node, prev_node: Node = None, is_left: bool = True
     ) -> Tuple(Node, Node, bool):
-        '''Traverses to a node having value
+        """Traverses to a node having value
 
         Returns (as a tuple):
         - The node
         - Previous node
         - Whether the current travel is left or right
-        '''
+        """
         if node is None or value == node.value:
             return node, prev_node, is_left
         if value > node.value:
@@ -39,16 +39,16 @@ class Tree:
         return self._traverse(value, node.left, node, True)
 
     def search(self, value: int) -> Node:
-        '''Searches for a value in the tree
-        '''
+        """Searches for a value in the tree
+        """
         node, _, _ = self._traverse(value, self.root)
         if node:
             return 1
         return 0
 
     def add(self, value: int) -> None:
-        '''Adds a value to the tree
-        '''
+        """Adds a value to the tree
+        """
         node, prev_node, is_left = self._traverse(value, self.root)
         if node is None:
             if is_left:
@@ -59,11 +59,11 @@ class Tree:
             print(f"Value already exists in tree: {value}")
 
     def sum_tree(self) -> int:
-        '''Calculates sum of all elements in the tree
-        '''
+        """Calculates sum of all elements in the tree
+        """
         def _sum(node: Node) -> int:
-            '''Sum helper
-            '''
+            """Sum helper
+            """
             if node is not None:
                 return node.value + _sum(node.left) + _sum(node.right)
             return 0
