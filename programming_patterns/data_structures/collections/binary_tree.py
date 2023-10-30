@@ -24,7 +24,7 @@ class Tree:
     def _traverse(
         self, value: int,
         node: Node, prev_node: Node = None, is_left: bool = True
-    ) -> Tuple(Node, Node, bool):
+    ) -> Tuple[Node, Node, bool]:
         """Traverses to a node having value
 
         Returns (as a tuple):
@@ -58,8 +58,8 @@ class Tree:
         else:
             print(f"Value already exists in tree: {value}")
 
-    def sum_tree(self) -> int:
-        """Calculates sum of all elements in the tree
+    def sum_values(self) -> int:
+        """Calculates sum of all Nodes' values in the tree
         """
         def _sum(node: Node) -> int:
             """Sum helper
@@ -96,3 +96,4 @@ if __name__ == "__main__":
     tree.add(7)
     tree.add(45)
     print(tree)
+    print(tree.sum_values())
