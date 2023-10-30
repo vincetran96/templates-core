@@ -3,6 +3,8 @@
 import os
 from enum import Enum
 
+from airflow.models import Variable
+
 
 class OsVar(Enum):
     '''OS variables
@@ -20,17 +22,17 @@ class AirflowVar(Enum):
 class Configs:
     '''Class to get config variables
     '''
-    @classmethod
-    def get_os_var(cls, var: str):
+    @staticmethod
+    def get_os_var(var: str):
         '''Gets OS variable
         '''
         return os.getenv(var)
 
-    @classmethod
-    def get_airflow_var(cls, var: str):
+    @staticmethod
+    def get_airflow_var(var: str):
         '''Gets Airflow variable
         '''
-        return os.getenv(var)
+        return Variable.get(var)
 
 
 if __name__ == "__main__":
