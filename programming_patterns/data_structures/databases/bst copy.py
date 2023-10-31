@@ -17,80 +17,72 @@ class Node:
         """
         return self.left is not None or self.right is not None
 
-    def lappend(self, node: 'Node') -> None:
+    def lappend(self, node: Node) -> None:
         """Left append
         """
         self.left = node
 
-    def rappend(self, node: 'Node') -> None:
+    def rappend(self, node: Node) -> None:
         """Right append
         """
         self.right = node
-
-    def set_parent(self, node: 'Node') -> None:
-        """Sets parent
-        """
-        self.parent = node
 
 
 class Tree:
     """Rough implementation of Binary Search Tree
     """
     def __init__(self, root_value: int = None):
-        if not root_value:
-            raise ValueError("Must provide value for root")
-        self.root = Node(root_value)
+        root: Node = None
+        if root_value:
+            root = Node(root_value)
+        self.root = root
 
-    def _traverse(self, value: int, node: Node):
+    def _traverse(self, value: int, node: Node) -> Node:
         """Traverses downward from this node
         to a node having value
 
         Returns:
+            - The node
         """
-        def _trav(n: Node, prev_n: Node, is_left: bool):
-            if n is None or value == n.value:
-                return n, prev_n, is_left
-            if value > n.value:
-                return _trav(n.right, n, False)
-            return _trav(n.left, n, True)
+        if node is None or value == node.value:
+            return node
+        if value > node.value:
+            return self._traverse(value, node.right)
+        return self._traverse(value, node.left)
 
-        return _trav(node, node, True)
+    def _change_child(self, node: Node, child_node: Node, is_left: bool):
+        """Changes this node's child node
+        into another Node instance
+        """
+        if is_left:
+            node.left = child_node
+        else:
+            node.right = child_node
 
-    def search(self, value: int) -> int:
+    def search(self, value: int) -> Node:
         """Searches for a value in the tree
-
-        Returns:
-            - 1 if found, 0 if not
         """
         node, _, _ = self._traverse(value, self.root)
         if node:
             return 1
         return 0
 
-    def insert_value(self, value: int) -> None:
+    def add_value(self, value: int) -> None:
         """Adds a value to the tree
         """
-        node, parent, is_left = self._traverse(value, self.root)
+        node, prev_node, is_left = self._traverse(value, self.root)
         if node is None:
-            new_node = Node(value)
-            if parent is None:
-                self.root = new_node
-            else:
-                new_node.set_parent(parent)
-                if is_left:
-                    parent.lappend(new_node)
-                else:
-                    parent.rappend(new_node)
+            self._change_child(prev_node, Node(value), is_left)
         else:
             raise ValueError(f"Value already exists in tree: {value}")
 
-    def insert_values(self, values: List[int]) -> None:
+    def add_values(self, values: List[int]) -> None:
         """Adds multiple values to the tree
 
         Adds using the order of the values provided
         """
         for value in values:
-            self.insert_value(value)
+            self.add_value(value)
 
     def delete(self, value: int) -> None:
         """Deletes a value from the tree
@@ -172,17 +164,18 @@ class Tree:
 
 if __name__ == "__main__":
     tree = Tree(27)
-    tree.insert_value(14)
-    tree.insert_values([35, 12, 20, 10, 13, 17, 22, 9, 16, 18, 23])
+    print(f"Search for value=2: {tree.search(2)}")
+    tree.add_value(14)
+    print(f"Search for value=2: {tree.search(2)}")
+    tree.add_values([35, 12, 20, 10, 13, 17, 22, 9, 16, 18, 23])
     print(tree)
     print(tree.sum_values())
-    # tree.insert_value(14)
-    # print("Deleting")
-    # tree.delete(20)
-    # print(tree)
+    print("Deleting")
+    tree.delete(20)
+    print(tree)
 
     print("Delete from single-node tree")
     tree1 = Tree(100)
     print(tree1)
-    # tree1.delete(100)
-    # print(tree1)
+    tree1.delete(100)
+    print(tree1)
