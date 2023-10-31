@@ -10,11 +10,22 @@ class Node:
         self.value = value
         self.left: Node = None
         self.right: Node = None
+        self.parent: Node = None
 
     def has_children(self) -> bool:
         """Checks if the node has children
         """
         return self.left is not None or self.right is not None
+
+    def lappend(self, node: Node) -> None:
+        """Left append
+        """
+        self.left = node
+
+    def rappend(self, node: Node) -> None:
+        """Right append
+        """
+        self.right = node
 
 
 class Tree:
