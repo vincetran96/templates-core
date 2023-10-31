@@ -40,6 +40,7 @@ class Tree:
         if not root_value:
             raise ValueError("Must provide value for root")
         self.root = Node(root_value)
+        self.traverse_modes = ('in-order', 'pre-order', 'post-order')
 
     def _traverse(self, value: int, node: Node):
         """Traverses downward from this node
@@ -55,6 +56,27 @@ class Tree:
             return _trav(n.left, n, True)
 
         return _trav(node, node, True)
+
+    def traverse(self, mode: str) -> str:
+        """Traversal
+
+        Returns: a string representing order of traverssal
+        """
+        if mode not in self.traverse_modes:
+            raise ValueError("Must specify mode")
+
+        def _trav(node: Node):
+            if node is None:
+                return ""
+
+            traverse_mode_map = {
+                'in-order': _trav(node.left) + f" {{{str(node.value)}}} " + _trav(node.right),
+                'pre-order': f" {{{str(node.value)}}} " + _trav(node.left) + _trav(node.right),
+                'post-order': _trav(node.left) + _trav(node.right) + f" {{{str(node.value)}}} "
+            }
+            return traverse_mode_map[mode]
+
+        return "[" + _trav(self.root).strip() + "]"
 
     def search(self, value: int) -> int:
         """Searches for a value in the tree
@@ -175,6 +197,11 @@ if __name__ == "__main__":
     tree.insert_value(14)
     tree.insert_values([35, 12, 20, 10, 13, 17, 22, 9, 16, 18, 23])
     print(tree)
+    print("Traverse:")
+    print(tree.traverse("in-order"))
+    print(tree.traverse("pre-order"))
+    print(tree.traverse("post-order"))
+    print("Sum all values:")
     print(tree.sum_values())
     # tree.insert_value(14)
     # print("Deleting")
