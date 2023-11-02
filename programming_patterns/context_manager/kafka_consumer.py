@@ -1,7 +1,7 @@
 """Kafka Consumer sample
 
 Here we use the `closing` class from contextlib
-and use a context maneger to properly close the consumer instance
+and use a context manager to properly close the consumer instance
 """
 from contextlib import closing
 
