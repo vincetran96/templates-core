@@ -27,10 +27,8 @@ class LSMTree():
     def __init__(self, dbpath: str = DBPATH):
         """Creates a LSMTree
 
-        ---
-        params
-        ---
-            - dbpath (str): Path to the db file
+        Args:
+            dbpath: (str) Path to the db file
         """
         self.memtable = {}
         self.dbpath = dbpath
