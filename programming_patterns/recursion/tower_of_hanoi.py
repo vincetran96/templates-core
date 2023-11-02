@@ -30,5 +30,6 @@ def print_moves(
             towers
         )
 
+
 if __name__ == "__main__":
-    print_moves([1,2,3], "A", "C", {"A", "B", "C"})
+    print_moves([1, 2, 3], "A", "C", {"A", "B", "C"})

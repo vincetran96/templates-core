@@ -16,25 +16,30 @@ from typing import List
 
 
 def bubble_sort(lst: List[int]) -> List[int]:
-    """I want to write a bubble sort function using recursion,
-    instead of looping
-    
-    Define an auxiliary func `swap`
-    
-    The idea is like so:
-    - Use 3 vars: 2 indexes for swapping and a boolean indicating if
-    a swap action has been done for one round (one round means one 
-    trip/loop from the start to end of list)
-    - If the right idx is out of bound, and the swap var is True,
-    then begin from the start of list; If the swap var is False
-    (meaning no swap action has been done for that round), then terminate
-    - If the right idx is in-bound, keep checking if swap is needed
-    and flip the swap var if a swap action has been done
+    """I want to write a bubble sort function using
+    recursion, instead of looping
 
-    Returns a new sorted list
+    Define an auxiliary func `swap`
+
+    The idea is like so:
+      - Use 3 vars: 2 indexes for swapping and a boolean indicating if
+        a swap action has been done for one round (one round means one
+        trip/loop from the start to end of list)
+      - If the right idx is out of bound, and the swap var is True,
+        then begin from the start of list; If the swap var is False
+        (meaning no swap action has been done for that round), then terminate
+      - If the right idx is in-bound, keep checking if swap is needed
+        and flip the swap var if a swap action has been done
+
+    Returns:
+        A new sorted list
+
+    Args:
+        lst: (List[int])
     """
     lst_cp = deepcopy(lst)
-    def swap(i_left: int=0, i_right: int=1, swapped: bool=False):
+
+    def swap(i_left: int = 0, i_right: int = 1, swapped: bool = False):
         """Swap helper
         """
         if i_right == len(lst_cp):
@@ -56,16 +61,22 @@ def merge_sort(lst: List[int]) -> List[int]:
     """A merge sort function using recursion
 
     Define 2 auxiliary functions:
-    
-    1. merge: It merges 2 already sorted lists into 1, very simple
-    2. sort:
-        - The idea of this function is to divide the list into
+
+    merge:
+      - It merges 2 already sorted lists into 1, very simple
+
+    sort:
+      - The idea of this function is to divide the list into
         sub-lists until the sub-list reaches length <= 1, at
         which point we return the sub-list
-        - To divide, this function recursively calls itself
-        - Then finally there is the outer-most `merge` call
+      - To divide, this function recursively calls itself
+      - Then finally there is the outermost `merge` call
 
-    Returns a new sorted list
+    Returns:
+        A new sorted list
+
+    Args:
+        lst: (List[int])
     """
     def _merge(l0: List[int], l1: List[int], result: List[int]):
         """Merges 2 sorted lists into 1
@@ -98,18 +109,22 @@ def selection_sort(lst: List[int]) -> List[int]:
     Define an auxiliary function `sort`
 
     The idea is like so:
-    - Use 2 vars: start index and current index. The
-    starting index keeps track of the start of the 
-    "segment" to do the swapping. The current index keeps
-    track of the current element to compare with the element 
-    at the start of the segment
-    - If the element at the current index is less than 
-    the element at the start, swap them. Keep doing this 
-    until the current element reaches the end of the segment, 
-    at which point we move the start index forward and set the 
-    current index next to it
+      - Use 2 vars: start index and current index. The
+        starting index keeps track of the start of the
+        "segment" to do the swapping. The current index keeps
+        track of the current element to compare with the element
+        at the start of the segment
+      - If the element at the current index is less than
+        the element at the start, swap them. Keep doing this
+        until the current element reaches the end of the segment,
+        at which point we move the start index forward and set the
+        current index next to it
 
-    Returns a new sorted list
+    Returns:
+        A new sorted list
+
+    Args:
+        lst: (List[int])
     """
     lst_cp = deepcopy(lst)
     def _sort(start_idx: int = 0, current_idx: int = 1):
