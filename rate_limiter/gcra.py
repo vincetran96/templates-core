@@ -24,10 +24,10 @@ class GCRARateLimiter:
         smooth: bool = True
     ):
         """
-        :params:
-            - `rate_limit`: number of allowed hits per period
-            - `period`: the length of period in seconds
-            - `smooth`: indicates whether to smooth out the requests
+        Args:
+            rate_limit: number of allowed hits per period
+            period: the length of period in seconds
+            smooth: indicates whether to smooth out the requests
         """
         if rate_limit <= 0:
             raise ValueError("param rate_limit must be greater than 0")
@@ -42,7 +42,7 @@ class GCRARateLimiter:
 
         Source: https://dev.to/astagi/rate-limiting-using-python-and-redis-58gk
         """
-        now = time.time() # maybe consider time.monotonic()
+        now = time.time()  # maybe consider time.monotonic()
         try:
             if not self.timestamp:
                 self.timestamp = now
@@ -55,14 +55,14 @@ class GCRARateLimiter:
                 print(
                     f"Request allowed at {now}, allowed ts at {allowed_at}"
                 )
-                return (False, None)
+                return False, None
             print(
                 f"Request rate-limited at {now}, allowed ts at {allowed_at}, wait for {allowed_at - now}"
             )
-            return (True, allowed_at - now)
+            return True, allowed_at - now
         except Exception as exc:
             print(f"GCRARateLimiter: EXCEPTION: {exc}")
-            return (True, self.increment)
+            return True, self.increment
 
     async def wait(self):
         """API call to wait until the requesting function is not rate-limited

@@ -2,7 +2,7 @@ import time
 import asyncio
 import pytest
 from collections import deque
-from ratelimiter.gcra import GCRARateLimiter
+from rate_limiter.gcra import GCRARateLimiter
 
 
 class TestGCRA:
@@ -16,11 +16,11 @@ class TestGCRA:
             pass
 
     @pytest.mark.parametrize(
-        "rate_limit,num_workers",
+        "rate_limit, num_workers",
         [(6, 5), (20, 35), (50, 100)]
     )
     @pytest.mark.asyncio
-    async def test_rate_limitting(self, rate_limit, num_workers):
+    async def test_rate_limiting(self, rate_limit, num_workers):
         throttler = GCRARateLimiter(rate_limit)
         logs = deque()
 
