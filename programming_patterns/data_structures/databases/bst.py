@@ -55,7 +55,8 @@ class Node:
             self.right = node
         else:
             raise ValueError(
-                f"The child candidate has the same value as the parent: {self.value}"
+                f"The child candidate has the same value"
+                f"as the parent: {self.value}"
             )
         node.parent = self
 
@@ -82,9 +83,12 @@ class Node:
 class Tree:
     """Rough implementation of Binary Search Tree
     """
-    def __init__(self, root_value: int):
-        self.root = Node(root_value)
-        self.traverse_modes = ('in-order', 'pre-order', 'post-order')
+    TRAVERSE_MODES = ('in-order', 'pre-order', 'post-order')
+
+    def __init__(self, root: Node):
+        if root is None:
+            raise ValueError("Root node must not be None")
+        self.root = root
 
     def _locate_value(self, value: int) -> Tuple[Node, Node]:
         """Travels downward from root to a node having this value
@@ -101,7 +105,59 @@ class Tree:
                 return node, prev_node
             return _trav(node.lr(value), node)
 
-        return _trav(self.root, self.root)
+        return _trav(self.root, self.root.parent)
+
+    def _delete_root(self):
+        """Deletes the root of this tree
+
+        Define an auxiliary function `find_successor`
+
+        The idea is as follows:
+
+        If the value is not found in the tree, raise Exception
+
+        If the node containing the value has no children, remove the node
+        from the tree depending on where the node is respective to
+        its parent (left or right)
+
+        If the node containing the value has children:
+
+        - If the node has only 1 child, replace the node with the
+          node's child (i.e., promote the node's child to be the
+          child of the node's parent)
+        - If the node has children on both sides, find the successor by
+          looking for the leftmost node from the right child of the node,
+          then replace the node with the successor (i.e., promote the
+          successor to be the child of the node's parent)
+
+        But we must take care of the case where the successor
+        has child on the right?
+
+        - The successor must only have 1 child on the right, because the
+        successor is the leftmost node already
+        """
+        def _find_successor(node: Node, prev_node: Node):
+            """Finds the leftmost node on the right branch of this node
+            """
+            if node.left is None:
+                print(f"Found successor: {node.value}")
+                return node, prev_node
+            return _find_successor(node.left, node)
+
+        match self.root.num_children():
+            case 0:
+                raise RuntimeError("Cannot delete the root node from a single-node tree")
+            case 1:
+                self.root = self.root.left or self.root.right
+            case _:
+                succ, succ_parent = _find_successor(self.root.right, self.root)
+                if self.root.is_parent(succ):
+                    succ.set_child(self.root.left)
+                else:
+                    succ_parent.set_child(succ.right)
+                    succ.set_child(self.root.left)
+                    succ.set_child(self.root.right)
+                self.root = succ
 
     def traverse(self, mode: str) -> str:
         """Traversal in string
@@ -112,8 +168,8 @@ class Tree:
         Args:
             mode: (str) - String presenting mode
         """
-        if mode not in self.traverse_modes:
-            raise ValueError("Must specify mode")
+        if mode not in self.TRAVERSE_MODES:
+            raise ValueError("Must specify a valid mode")
 
         def _trav(node: Node):
             if node is None:
@@ -166,66 +222,24 @@ class Tree:
         for value in values:
             self.insert_value(value)
 
-    def delete(self, value: int) -> None:
+    def delete_value(self, value: int) -> None:
         """Deletes a value from the tree
 
-        Define an auxiliary function `find_successor`
-
-        The idea is as follows:
-
-        If the value is not found in the tree, raise Exception
-
-        If the node containing the value has no children,
-        remove the node from the tree depending on where
-        the node is respective to its parent (left or right)
-
-        If the node containing the value has children:
-
-        - If the node has only 1 child, replace the node
-          with the node's child (i.e., promote the
-          node's child to be the child of the node's parent)
-        - If the node has children on both sides, find the
-          successor by looking for the leftmost node from the
-          right child of the node, then replace the node with
-          the successor (i.e., promote the successor to be the
-          child of the node's parent)
-
-        But we must take care of the case where the successor
-        has child on the right?
-
-        - The successor must only have 1 child on the right,
-          because the successor is the leftmost node already
+        The idea is to treat the tree with the node to delete
+        as its own tree, and make it like we're deleting the root of that tree
 
         Args:
             value: (int)
         """
-        def _find_successor(node: Node, prev_node: Node):
-            """Finds the leftmost node on the
-            right branch of this node
-            """
-            if node.left is None:
-                return node, prev_node
-            return _find_successor(node.left, node)
-
         node, node_parent = self._locate_value(value)
         if node is None:
             raise ValueError(f"Value does not exist in tree: {value}")
-        if node is self.root and len(self) == 1:
-            raise RuntimeError("Cannot delete the root node from a single-node tree")
-        match node.num_children():
-            case 0:
-                node_parent.remove_child(node)
-            case 1:
-                node_parent.set_child(node.left or node.right)
-            case _:
-                succ, succ_parent = _find_successor(node.right, node)
-                if node.is_parent(succ):
-                    node_parent.set_child(succ)
-                    succ.set_child(node.left)
-                else:
-                    succ_parent.set_child(succ.right)
-                    succ.set_child(node.left)
-                    succ.set_child(node.right)
+        sub_tree = Tree(node)  # tree with the node to delete as root
+        sub_tree._delete_root()
+        if node is self.root:
+            self.root = sub_tree.root
+        else:
+            node_parent.set_child(sub_tree.root)
 
     def sum_values(self) -> int:
         """Calculates sum of all Nodes' values in the tree
@@ -281,11 +295,12 @@ if __name__ == "__main__":
     print(f"node2: {node0.right.value}")
     print(f"Is node2 child of node0: {node0.is_parent(node2)}")
 
-    tree = Tree(27)
+    node27 = Node(27)
+    tree = Tree(node27)
     tree.insert_value(14)
     tree.insert_values([35, 12, 20, 10, 13, 17, 22, 9, 16, 18, 23])
-    print(tree)
-    print("Traverse:")
+    print(f">> Print tree:\n{tree}")
+    print(">> Traverse:")
     print(tree.traverse("in-order"))
     print(tree.traverse("pre-order"))
     print(tree.traverse("post-order"))
@@ -293,23 +308,26 @@ if __name__ == "__main__":
     print("Sum all values:")
     print(tree.sum_values())
     print(len(tree))
-    print("Delete:")
-    tree.delete(20)
-    print(tree)
+    print(">> Delete:")
+    tree.delete_value(27)
+    print(f">> Print tree:\n{tree}")
     print(tree.traverse("in-order"))
     print(f"Length of tree: {len(tree)}")
 
-    print("Delete from single-node tree")
-    tree1 = Tree(100)
-    print(tree1)
+    print(">> Delete from single-node tree")
+    node100 = Node(100)
+    tree1 = Tree(node100)
+    print(f">> Print tree:\n{tree1}")
     try:
-        tree1.delete(100)
+        tree1.delete_value(100)
     except RuntimeError as exc:
         print(f"Exception: {exc}")
-    print(tree1)
+    print(f">> Print tree:\n{tree1}")
 
-    tree2 = Tree(2)
+    node2 = Node(2)
+    tree2 = Tree(node2)
     tree2.insert_values([1, 3])
-    print(tree2)
-    tree2.delete(2)
-    print(tree2)
+    print(f">> Print tree:\n{tree2}")
+    print(">> Delete from simple tree")
+    tree2.delete_value(2)
+    print(f">> Print tree:\n{tree2}")
