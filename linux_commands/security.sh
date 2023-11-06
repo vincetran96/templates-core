@@ -1,2 +1,2 @@
 # SHA hash of text in Mac terminal
-echo -n zxcv | shasum -a 256
+echo -n zxcv | shasum -a 1
