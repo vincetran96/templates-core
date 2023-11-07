@@ -31,6 +31,8 @@ def bubble_sort(lst: List[int]) -> List[int]:
       - If the right idx is in-bound, keep checking if swap is needed
         and flip the swap var if a swap action has been done
 
+    This algorithm's time complexity is O(n^2)
+
     Returns:
         A new sorted list
 
@@ -51,7 +53,7 @@ def bubble_sort(lst: List[int]) -> List[int]:
                     lst_cp[i_right], lst_cp[i_left]
                 swapped = True
             swap(i_left + 1, i_right + 1, swapped)
-    
+
     if lst_cp:
         swap()
     return lst_cp
@@ -72,6 +74,8 @@ def merge_sort(lst: List[int]) -> List[int]:
       - To divide, this function recursively calls itself
       - Then finally there is the outermost `merge` call
 
+    This algorithm's time complexity is O(n*log(n))
+
     Returns:
         A new sorted list
 
@@ -83,23 +87,22 @@ def merge_sort(lst: List[int]) -> List[int]:
         """
         if not l0 or not l1:
             return result + l1 + l0
+        if l0[0] < l1[0]:
+            _in = l0.pop(0)
         else:
-            if l0[0] < l1[0]:
-                _in = l0.pop(0)
-            else:
-                _in = l1.pop(0)
-            return _merge(l0, l1, result + [_in])
-        
+            _in = l1.pop(0)
+        return _merge(l0, l1, result + [_in])
+
     def _sort(lst_: List[int]):
         """Sorts helper
-        
+
         If the length <= 2, divide it then merge
         """
         if len(lst_) <= 1:
             return lst_
         mid_idx = int((len(lst_) - 1) / 2) + 1
         return _merge(_sort(lst_[0:mid_idx]), _sort(lst_[mid_idx:]), [])
-        
+
     return _sort(lst)
 
 
@@ -120,6 +123,8 @@ def selection_sort(lst: List[int]) -> List[int]:
         at which point we move the start index forward and set the
         current index next to it
 
+    This algorithm's time complexity is O(n^2)
+
     Returns:
         A new sorted list
 
@@ -127,6 +132,7 @@ def selection_sort(lst: List[int]) -> List[int]:
         lst: (List[int])
     """
     lst_cp = deepcopy(lst)
+
     def _sort(start_idx: int = 0, current_idx: int = 1):
         """Sorts helper
         """
@@ -141,20 +147,46 @@ def selection_sort(lst: List[int]) -> List[int]:
 
     if len(lst_cp) > 1:
         _sort()
+
+    return lst_cp
+
+
+def insertion_sort(lst: List[int]) -> List[int]:
+    """Insertion sort
+    """
+    lst_cp = deepcopy(lst)
+
+    def _swap(compare_idx: int, current_idx: int, value: int):
+        """...
+        """
+        if current_idx < len(lst_cp):
+            if compare_idx >= 0 and lst_cp[compare_idx] > value:
+                lst_cp[compare_idx + 1] = lst_cp[compare_idx]
+                lst_cp[compare_idx] = value
+                _swap(compare_idx - 1, current_idx, value)
+            elif current_idx < len(lst_cp) - 1:
+                _swap(current_idx, current_idx + 1, lst_cp[current_idx + 1])
+
+    if len(lst_cp) > 1:
+        _swap(0, 1, lst_cp[1])
+
     return lst_cp
 
 
 if __name__ == "__main__":
     print("Bubble sort:")
-    print(bubble_sort([3,2,1]))
+    print(bubble_sort([3, 2, 1]))
     print(bubble_sort([1]))
     print(bubble_sort([]))
     print("Merge sort:")
-    print(merge_sort([1000,1,5,3,7000,15,2]))
+    print(merge_sort([1000, 1, 5, 3, 7000, 15, 2]))
     print(merge_sort([1]))
     print(merge_sort([]))
     print("Selection sort:")
-    print(selection_sort([1000,1,5,3,7000,15,2]))
-    print(selection_sort([1000,1,-5,3,7000,15,2]))
+    print(selection_sort([1000, 1, 5, 3, 7000, 15, 2]))
+    print(selection_sort([1000, 1, 2, 3, 7000, 15, -5]))
     print(selection_sort([1]))
     print(selection_sort([]))
+    print(insertion_sort([1000, 1, 2, 3, 7000, 15, -5]))
+    print(insertion_sort([1]))
+    print(insertion_sort([]))
