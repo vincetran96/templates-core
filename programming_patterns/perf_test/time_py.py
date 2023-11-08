@@ -1,36 +1,38 @@
 """Tests time functions
 """
 import timeit
+from pprint import pprint
 
 
-NUMBER = 100000
-results = {}
+TEST_TIMES = 100000
+RESULTS = {}
 
 
 if __name__ == "__main__":
-    results["time.time()"] = timeit.timeit(
+    RESULTS["time.time()"] = timeit.timeit(
         setup="import time", stmt="time.time()",
-        number=NUMBER
+        number=TEST_TIMES
     )
-    results["datetime.now().timestamp()"] = timeit.timeit(
+    RESULTS["datetime.now().timestamp()"] = timeit.timeit(
         setup="import datetime", stmt="datetime.datetime.now().timestamp()",
-        number=NUMBER
+        number=TEST_TIMES
     )
-    results["datetime.now()"] = timeit.timeit(
+    RESULTS["datetime.now()"] = timeit.timeit(
         setup="import datetime", stmt="datetime.datetime.now()",
-        number=NUMBER
+        number=TEST_TIMES
     )
-    results["datetime.utcnow()"] = timeit.timeit(
+    RESULTS["datetime.utcnow()"] = timeit.timeit(
         setup="import datetime", stmt="datetime.datetime.utcnow()",
-        number=NUMBER
+        number=TEST_TIMES
     )
-    results["pytz.UTC.localize(datetime.utcnow())"] = timeit.timeit(
+    RESULTS["pytz.UTC.localize(datetime.utcnow())"] = timeit.timeit(
         setup="import datetime; import pytz",
         stmt="pytz.UTC.localize(datetime.datetime.utcnow())",
-        number=NUMBER,
+        number=TEST_TIMES,
     )
-    results["tz.localize(datetime.utcnow())"] = timeit.timeit(
+    RESULTS["tz.localize(datetime.utcnow())"] = timeit.timeit(
         setup="import datetime; import pytz; a_timezone = pytz.timezone('America/Los_Angeles')",
         stmt="a_timezone.localize(datetime.datetime.utcnow())",
-        number=NUMBER,
+        number=TEST_TIMES,
     )
+    pprint(sorted(RESULTS.items(), key=lambda x: x[1]))
