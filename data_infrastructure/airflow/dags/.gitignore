@@ -1,2 +1,4 @@
 *
 !.gitignore
+!*.py
+!sub_dir

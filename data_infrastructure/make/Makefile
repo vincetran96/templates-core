@@ -1,6 +1,10 @@
 target:
-    ifeq ($(arg1), Hello)
+		ifeq ($(arg1), Hello)
 		@echo "Did you just say Hello?"
-    else
+		else
 		@echo "What?"
-    endif
+		endif
+
+# make can see env vars too
+echo_home:
+	@echo $(HOME)

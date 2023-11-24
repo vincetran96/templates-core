@@ -11,4 +11,4 @@ COPY requirements.txt /opt/airflow
 USER airflow
 WORKDIR /opt/airflow
 RUN python -m pip install --upgrade pip
-RUN pip install -r ./requirements.txt
+RUN pip install -r requirements.txt
