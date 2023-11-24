@@ -1,1 +1,4 @@
 requests
+psycopg2-binary
+apache-airflow==2.7.2
+apache-airflow-providers-postgres==5.7.1

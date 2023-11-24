@@ -1,14 +1,17 @@
-COMPOSEFILE = $(cf)
-DOCKERFILE = $(df)
 IMAGE_TAG = $(tag)
+DOCKERFILE = $(df)
+COMPOSEFILE = $(cf)
+ENVFILE = $(env)
 
-docker_build: 
+docker-build: 
 	@docker build -t $(IMAGE_TAG) -f $(DOCKERFILE) --no-cache .
 
-docker_up:
-	@docker compose -f $(COMPOSEFILE) up -d
+docker-up:
+	@docker compose -f $(COMPOSEFILE) --env-file .env up -d
 
-docker_down:
-	@docker compose -f $(COMPOSEFILE) down
+docker-down:
+	@docker compose -f $(COMPOSEFILE) --env-file .env down --remove-orphans
 
-docker_buildup: docker_build docker_up
+docker-buildup: \
+	docker_build \
+	docker_up

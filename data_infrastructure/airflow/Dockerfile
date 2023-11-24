@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y telnet nano
 
 USER airflow
 COPY dags /opt/airflow/dags
+COPY py /opt/airflow/py
 COPY requirements.txt /opt/airflow
 
 USER airflow

@@ -45,6 +45,12 @@
 # Feel free to modify this file to suit your needs.
 ---
 version: '3.8'
+
+networks:
+  my-network:
+      name: ${NETWORK_NAME}
+      external: true
+
 x-airflow-common:
   &airflow-common
   # In order to add custom dependencies or upgrade provider packages you can use your extended image.
@@ -84,6 +90,8 @@ x-airflow-common:
       condition: service_healthy
     postgres:
       condition: service_healthy
+  networks:
+    - my-network
 
 services:
   postgres:
@@ -100,6 +108,8 @@ services:
       retries: 5
       start_period: 5s
     restart: always
+    networks:
+    - my-network
 
   redis:
     image: redis:latest
@@ -112,6 +122,8 @@ services:
       retries: 50
       start_period: 30s
     restart: always
+    networks:
+    - my-network
 
   airflow-webserver:
     <<: *airflow-common
