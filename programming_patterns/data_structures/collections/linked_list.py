@@ -41,7 +41,7 @@ class SinglyLinkedList:
         return self.tail.value
 
     def sort(self):
-        """Sorts itself"""
+        """Sorts itself using selection sort"""
         def _sort(base_node: Node, compare_node: Node):
             """Sort helper"""
             if base_node.next is not None:
