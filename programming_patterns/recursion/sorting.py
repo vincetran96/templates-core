@@ -173,6 +173,21 @@ def insertion_sort(lst: List[int]) -> List[int]:
     return lst_cp
 
 
+def insertion_sort_v2(lst: List[int]) -> List[int]:
+    """Insertion sort v2, learnt from RockTheJVM Scala course
+    """
+    def _insert(item: int, seq: List[int]) -> List[int]:
+        if seq:
+            if item < seq[0]:
+                return [item] + seq
+            return [seq[0]] + _insert(item, seq[1:])
+        return [item]
+
+    if len(lst) > 1:
+        return _insert(lst[0], insertion_sort_v2(lst[1:]))
+    return lst
+
+
 if __name__ == "__main__":
     print("Bubble sort:")
     print(bubble_sort([3, 2, 1]))
@@ -187,6 +202,11 @@ if __name__ == "__main__":
     print(selection_sort([1000, 1, 2, 3, 7000, 15, -5]))
     print(selection_sort([1]))
     print(selection_sort([]))
+    print("Insertion sort:")
     print(insertion_sort([1000, 1, 2, 3, 7000, 15, -5]))
     print(insertion_sort([1]))
     print(insertion_sort([]))
+    print("Insertion sort v2:")
+    print(insertion_sort_v2([1000, 1, 5, 3, 7000, 15, 2]))
+    print(insertion_sort_v2([1]))
+    print(insertion_sort_v2([]))
