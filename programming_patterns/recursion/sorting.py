@@ -175,6 +175,8 @@ def insertion_sort(lst: List[int]) -> List[int]:
 
 def insertion_sort_v2(lst: List[int]) -> List[int]:
     """Insertion sort v2, learnt from RockTheJVM Scala course
+
+    This version is shorter and maybe easier to understand
     """
     def _insert(item: int, seq: List[int]) -> List[int]:
         if seq:

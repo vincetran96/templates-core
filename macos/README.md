@@ -16,3 +16,4 @@
 - [aldente](https://github.com/AppHouseKitchen/AlDente-Charge-Limiter)
 - [soundSource](https://rogueamoeba.com/soundsource/)
 - [tgPro](https://www.tunabellysoftware.com/tgpro/)
+- [bartender](https://www.macbartender.com/)
