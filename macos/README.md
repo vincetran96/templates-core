@@ -17,3 +17,4 @@
 - [soundSource](https://rogueamoeba.com/soundsource/)
 - [tgPro](https://www.tunabellysoftware.com/tgpro/)
 - [bartender](https://www.macbartender.com/)
+- [maccy](https://github.com/p0deje/Maccy)
