@@ -18,6 +18,7 @@
 - [tgPro](https://www.tunabellysoftware.com/tgpro/)
 - [bartender](https://www.macbartender.com/)
 - [maccy](https://github.com/p0deje/Maccy)
+- [tinkerTool](https://www.bresink.com/osx/TinkerTool.html)
 
 ## Dev
 - [colima](https://github.com/abiosoft/colima)
