@@ -23,3 +23,4 @@
 ## Dev
 - [colima](https://github.com/abiosoft/colima)
   - [buildx](https://aosolorzano.medium.com/installing-colima-as-a-docker-engine-provider-with-buildx-and-compose-plugins-installed-1ce8b3bae158)
+- [tldr](https://github.com/tldr-pages/tldr/wiki/tldr-pages-clients)
