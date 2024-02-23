@@ -48,6 +48,14 @@ kafka-console-consumer.sh \
     --property "key.separator=:"
 ```
 
+```
+kafka-console-consumer.sh \
+    --bootstrap-server localhost:9094 \
+    --consumer.config config/config.example.properties \
+    --topic shopping-ads-log \
+    --from-beginning
+```
+
 ## Consumer group
 **Create consumer group**
 ```
