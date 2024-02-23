@@ -7,6 +7,7 @@ def sort0(lst):
         return lst
 
     def merge(l1, l2):
+        """Merges 2 lists"""
         m = []
         while l1 or l2:
             if l1 == [] or l2 == []:
