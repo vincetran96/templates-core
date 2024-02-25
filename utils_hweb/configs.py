@@ -17,8 +17,8 @@ CLICKHOUSE_PASSWORD = os.getenv('CLICKHOUSE_PASSWORD') or CONFIGS['PASSWORD']
 DATE_FORMAT = '%Y-%m-%d'
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
-CH_PROD_HOST = 'https://ch.itim.vn:443'
-CH_DEV_HOST = 'http://statistics-clickhouse1-virt.dev.itim.vn:8123'
+CH_PROD_HOST = 'https://localhost:443'
+CH_DEV_HOST = 'http://localhost:8123'
 CH_TIMEDELTA_REQUESTS = 0.5
 
 GPU_HOST = "10.0.8.27" or CONFIGS['GPU_HOST']
