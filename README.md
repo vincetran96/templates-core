@@ -5,6 +5,7 @@
 - kafka
 - make
 - spark
+- unittest
 
 # Programming patterns
 ## Drafts
