@@ -1,3 +1,8 @@
+"""Get subsequences/subarrays from a sequence/array
+"""
+from typing import List
+
+
 def get_all_subsequences_recursive(A: list):
     """Recursive method
     """
@@ -55,6 +60,22 @@ def get_all_increasing_subsequences(A: list):
         subseqs.append([element])
         subseqs += additional_subseqs
     return subseqs
+
+
+def subsets(nums: List[int]) -> List[List[int]]:
+    """Similar to get_all_subsequences;
+
+    This is an example of depth-first-search
+    """
+    def get_subsets(base: List[int], rest: List[int]) -> List[List[int]]:
+        """Auxiliary function
+        """
+        subsets = [base]
+        if rest:
+            for i, e in enumerate(rest):
+                subsets += get_subsets(base + [e], rest[i+1:]) 
+        return subsets
+    return get_subsets([], nums)
 
 
 if __name__ == "__main__":

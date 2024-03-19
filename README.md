@@ -22,3 +22,8 @@ Solutions to leetcode problems
 
 ## Performance test
 - Experiments with different methods of doing the same thing
+
+## Recursion
+- Sorting
+- Subsequences/subsets
+  - Depth-first-search
