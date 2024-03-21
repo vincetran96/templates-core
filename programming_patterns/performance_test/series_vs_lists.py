@@ -5,7 +5,7 @@ import timeit
 from pprint import pprint
 
 
-TEST_TIMES = 200
+TEST_TIMES = 100
 RESULTS = {}
 
 SETUP = """
@@ -20,9 +20,14 @@ def random_substr(st: str):
     end = random.randint(start + 1, len(st))
     return st[start:end]
 
+def process(line):
+    return "e" in line.st
+
 base_st = string.ascii_lowercase
 st_arr = [random_substr(base_st) for _ in range(999999)]
 pd_series = pd.Series(st_arr)
+pd_df = pd.DataFrame({"st":st_arr})
+pd_df['filter'] = [process(line) for line in pd_df.itertuples()]
 """
 
 stmt_series = """
@@ -33,6 +38,9 @@ stmt_list = """
 st_arr_filtered = [st for st in st_arr if "e" in st]
 """
 
+stmt_df = """
+pd_df_filtered = pd_df[pd_df['filter']]['st'].values.tolist()
+"""
 
 if __name__ == "__main__":
     RESULTS['pd_series'] = timeit.timeit(
@@ -43,6 +51,11 @@ if __name__ == "__main__":
     RESULTS['list'] = timeit.timeit(
         setup=SETUP,
         stmt=stmt_list,
+        number=TEST_TIMES
+    )
+    RESULTS['pd_df'] = timeit.timeit(
+        setup=SETUP,
+        stmt=stmt_df,
         number=TEST_TIMES
     )
     pprint(sorted(RESULTS.items(), key=lambda x: x[1]))
