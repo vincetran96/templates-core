@@ -26,8 +26,7 @@ def process(line):
 base_st = string.ascii_lowercase
 st_arr = [random_substr(base_st) for _ in range(999999)]
 pd_series = pd.Series(st_arr)
-pd_df = pd.DataFrame({"st":st_arr})
-pd_df['filter'] = [process(line) for line in pd_df.itertuples()]
+pd_df = pd.DataFrame({"st": st_arr})
 """
 
 stmt_series = """
@@ -39,8 +38,10 @@ st_arr_filtered = [st for st in st_arr if "e" in st]
 """
 
 stmt_df = """
+pd_df['filter'] = [process(line) for line in pd_df.itertuples()]
 pd_df_filtered = pd_df[pd_df['filter']]['st'].values.tolist()
 """
+
 
 if __name__ == "__main__":
     RESULTS['pd_series'] = timeit.timeit(
