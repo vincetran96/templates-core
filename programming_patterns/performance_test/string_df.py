@@ -22,7 +22,7 @@ def random_substr(st: str):
     return st[start:end]
 
 def process(line):
-    return "e" in line
+    return "ea" in line
 
 base_st = string.ascii_lowercase
 st_arr = [random_substr(base_st) for _ in range(999999)]
@@ -33,6 +33,10 @@ df = pd.DataFrame({"st": st_arr, "st1": st_arr1, "st2": st_arr2})
 
 stmt_str_method = """
 df_filtered = df[(df['st'].str.contains("e")) | (df['st1'].str.contains("e")) | (df['st2'].str.contains("e"))]
+"""
+
+stmt_query = """
+df_filtered = df.query('(`st`.str.contains("e")) | (`st1`.str.contains("e")) | (`st2`.str.contains("e"))')
 """
 
 stmt_bool_array = """
@@ -80,6 +84,11 @@ if __name__ == "__main__":
     RESULTS['str_method'] = timeit.timeit(
         setup=SETUP,
         stmt=stmt_str_method,
+        number=TEST_TIMES
+    )
+    RESULTS['query'] = timeit.timeit(
+        setup=SETUP,
+        stmt=stmt_query,
         number=TEST_TIMES
     )
     RESULTS['bool_array'] = timeit.timeit(
