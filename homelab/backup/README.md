@@ -1,0 +1,2 @@
+- resolv.conf: /etc/resolv.conf
+- NetworkManager.conf: /etc/NetworkManager/NetworkManager.conf
