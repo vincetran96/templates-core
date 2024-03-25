@@ -1,7 +1,7 @@
 Connect to work VPN
 
 # Resources
-## General VPN issues
+## General VPN and OpenVPN issues
 - https://www.learnitguide.net/2023/04/how-do-i-check-my-dns-settings-in-linux.html
 - https://askubuntu.com/questions/1247326/problem-with-dns-with-openvpn-on-ubuntu-20-04
 - https://askubuntu.com/questions/298419/how-to-disconnect-from-openvpn

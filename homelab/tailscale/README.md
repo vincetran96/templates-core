@@ -1,5 +1,6 @@
 # Start tailscale
-- `tailscale up --accept-dns=false`
+- `tailscale up --accept-dns=true` (with MagicDNS)
+- `tailscale up --accept-dns=false` (without MagicDNS)
 
 # Set up a subnet router
 - So devices can see each other as in a local network (?)
