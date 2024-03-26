@@ -1,4 +1,7 @@
-For homelab/home server stuff
+# What is this folder? For homelab/home server stuff
+- Computer hierarchy (from root)
+- Manpages
+- FAQs (links from external resources)
 - Pi-hole
 - Wireguard VPN
 - Netcheck
@@ -13,3 +16,7 @@ For homelab/home server stuff
 # Net
 ## Check current DNS server in-use
 `cat /etc/resolv.conf `
+## Check DNS servers for each interface
+`resolvectl status`
+## Check DNS speed
+- https://www.baeldung.com/linux/dns-speed-test

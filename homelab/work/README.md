@@ -1,4 +1,6 @@
-Connect to work VPN
+# Connect/Disconnect to work VPN
+- `sudo /home/username/work/Company/staff-vpn-2025/connect.sh`
+- `sudo /home/username/work/Company/staff-vpn-2025/disconnect.sh`
 
 # Resources
 ## General VPN and OpenVPN issues

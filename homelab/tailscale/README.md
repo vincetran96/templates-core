@@ -9,3 +9,6 @@
 
 # Tailscale and DNS
 - https://tailscale.com/kb/1188/linux-dns
+
+# Tailscale ping another node
+`tailscale ping --verbose=true nodename`
