@@ -12,6 +12,7 @@ SETUP = """
 import random
 import string
 import timeit
+from functools import reduce
 
 import pandas as pd
 import numpy as np
@@ -22,7 +23,10 @@ def random_substr(st: str):
     return st[start:end]
 
 def process(line):
-    return "ea" in line
+    return "e" in line
+
+def process_iter(row):
+    return "e" in row.st or "e" in row.st1 or "e" in row.st2
 
 base_st = string.ascii_lowercase
 st_arr = [random_substr(base_st) for _ in range(999999)]
@@ -40,7 +44,6 @@ df_filtered = df.query('(`st`.str.contains("e")) | (`st1`.str.contains("e")) | (
 """
 
 stmt_bool_array = """
-from functools import reduce
 st_mask = np.fromiter(map(process, df['st'].values), dtype=bool)
 st1_mask = np.fromiter(map(process, df['st1'].values), dtype=bool)
 st2_mask = np.fromiter(map(process, df['st2'].values), dtype=bool)
@@ -57,7 +60,6 @@ df_filtered = df[full_mask]
 """
 
 stmt_bool_array_pyfunc = """
-from functools import reduce
 process_arr = np.frompyfunc(process, 1, 1)
 st_mask = process_arr(df['st'].values)
 st1_mask = process_arr(df['st1'].values)
@@ -75,8 +77,14 @@ df_filtered = df[df['st_full'].str.contains("e")]
 # Concat all string columns, then use bool array
 stmt_concat_str_bool_array = """
 df['st_full1'] = df['st'] + df['st1'] + df['st2']
-st_mask = np.fromiter(map(process, df['st_full1'].values), dtype=bool)
-df_filtered = df[st_mask]
+full_mask = np.fromiter(map(process, df['st_full1'].values), dtype=bool)
+df_filtered = df[full_mask]
+"""
+
+# Itertuple
+stmt_itertuples = """
+full_mask = [process_iter(row) for row in df.itertuples()]
+df_filtered = df[full_mask]
 """
 
 
@@ -106,14 +114,19 @@ if __name__ == "__main__":
         stmt=stmt_bool_array_pyfunc,
         number=TEST_TIMES
     )
-    # RESULTS['concat_str_str_method'] = timeit.timeit(
-    #     setup=SETUP,
-    #     stmt=stmt_concat_str_str_method,
-    #     number=TEST_TIMES
-    # )
-    # RESULTS['concat_str_bool_array'] = timeit.timeit(
-    #     setup=SETUP,
-    #     stmt=stmt_concat_str_bool_array,
-    #     number=TEST_TIMES
-    # )
+    RESULTS['concat_str_str_method'] = timeit.timeit(
+        setup=SETUP,
+        stmt=stmt_concat_str_str_method,
+        number=TEST_TIMES
+    )
+    RESULTS['concat_str_bool_array'] = timeit.timeit(
+        setup=SETUP,
+        stmt=stmt_concat_str_bool_array,
+        number=TEST_TIMES
+    )
+    RESULTS['itertuples'] = timeit.timeit(
+        setup=SETUP,
+        stmt=stmt_itertuples,
+        number=TEST_TIMES
+    )
     pprint(sorted(RESULTS.items(), key=lambda x: x[1]))
