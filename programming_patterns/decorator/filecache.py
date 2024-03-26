@@ -4,6 +4,8 @@ from functools import wraps
 from typing import Callable
 from os import path, makedirs
 
+import pandas as pd
+
 
 def filecache(func):
     """Decorator to check if a CSV file already exists and return the filepath;
@@ -48,7 +50,7 @@ def dataframe_cache(location: str):
             if path.isfile(filepath):
                 logging.info(f"Data already cached at: {filepath}")
                 return pd.read_csv(filepath, compression='gzip', sep="\t")
-            makedirs(location, exist_ok=True)
+            makedirs(parentpath, exist_ok=True)
             data = func(*args, **kwargs)
             data.to_csv(filepath, compression='gzip', sep="\t", index=False)
             return data
