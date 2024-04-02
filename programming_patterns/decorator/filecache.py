@@ -59,7 +59,7 @@ def dataframe_cache(location: str):
 
 
 @filecache
-def fn():
+def download_data():
     """Mock for a func that downloads data
     """
     return "Download new data"
