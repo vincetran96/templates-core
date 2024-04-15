@@ -22,7 +22,7 @@ def _process_chunk(chunk: List[int]) -> None:
         _process(i)
 
 
-def looper(data: dict, chunksize: int = 5) -> None:
+def looper(data: dict, chunksize: int = 7) -> None:
     """Uses loop to process data
     """
     suffixes = []
@@ -36,9 +36,11 @@ def looper(data: dict, chunksize: int = 5) -> None:
         if len(suffixes) == chunksize:
             _process_chunk(suffixes)
             suffixes = []
+    if suffixes:
+        _process_chunk(suffixes)
 
 
-def mapper(data: dict, chunksize: int = 5):
+def mapper(data: dict, chunksize: int = 7):
     """Users map to process data
     """
     def generate():
@@ -55,6 +57,8 @@ def mapper(data: dict, chunksize: int = 5):
             if len(suffixes) == chunksize:
                 yield suffixes
                 suffixes = []
+        if suffixes:
+            yield suffixes
 
     results = list(map(_process_chunk, generate()))
     return results
