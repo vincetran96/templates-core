@@ -11,30 +11,40 @@ target:
 echo_home:
 	@echo $(HOME)
 
+# set makefile variables inside targets
+var_inside_target:
+	$(eval PYENV_HERE=$(shell which pyenv >/dev/null; echo $$?))
+	@echo $(PYENV_HERE)
+
 
 # Setup pyenv
 PYENV_VERSION = 3.9
 PYENV_TRAIN = ml_train
 PYENV_OPTIMIZE = ml_optimize
 
+# The ; \ at the end makes sure the lines are executed in the same "context"
 setup_pyenv:
-	curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ~/.bashrc
-	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ~/.bashrc
-	echo 'eval "$$(pyenv init -)"' >> ~/.bashrc
-	echo 'eval "$$(pyenv virtualenv-init -)"' >> ~/.bashrc
+	@if [ $(shell which pyenv >/dev/null; echo $$?) = "0" ]; then \
+		echo "pyenv is already installed"; \
+	else \
+		echo "pyenv not installed, installing it"; \
+		curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash; \
+		echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> $(HOME)/.bashrc; \
+		echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> $(HOME)/.bashrc; \
+		echo 'eval "$$(pyenv init -)"' >> $(HOME)/.bashrc; \
+		echo 'eval "$$(pyenv virtualenv-init -)"' >> $(HOME)/.bashrc; \
+		. $(HOME)/.bashrc; \
+	fi
 	pyenv install $(PYENV_VERSION) --skip-existing
 
 create_env_train:
-	pyenv virtualenv $(PYENV_VERSION) $(PYENV_TRAIN)
+	pyenv virtualenv -f $(PYENV_VERSION) $(PYENV_TRAIN)
 	. $(PYENV_ROOT)/versions/$(PYENV_TRAIN)/bin/activate \
-		&& pip install -r requirements-torch-gpu.txt \
 		&& pip install -r requirements-train.txt --no-deps
 
 create_env_optimize:
-	pyenv virtualenv $(PYENV_VERSION) $(PYENV_OPTIMIZE)
+	pyenv virtualenv -f $(PYENV_VERSION) $(PYENV_OPTIMIZE)
 	. $(PYENV_ROOT)/versions/$(PYENV_OPTIMIZE)/bin/activate \
-		&& pip install -r requirements-torch-cpu.txt \
 		&& pip install -r requirements-optimize.txt --no-deps
 
 setup_aircp:
