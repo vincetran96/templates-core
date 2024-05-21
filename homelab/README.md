@@ -20,3 +20,5 @@
 `resolvectl status`
 ## Check DNS speed
 - https://www.baeldung.com/linux/dns-speed-test
+## systemd-resolved and NetworkManager
+- https://sites.google.com/site/nandydandyoracle/orabuntu-lxc/using-systemd-resolved-in-a-networkmanager-environment

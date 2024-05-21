@@ -1,6 +1,19 @@
+# Setup
+## OVPN
+```
+mkdir -p Company/staff-vpn-2025
+cp connect.sh disconnect.sh fix-resolved-route-up.sh fix-resolved-route-pre-down.sh Company/staff-vpn-2025/
+```
+Optional:
+- Replace the text `Company` with your actual company name: `sed -i 's/Company/COMPANY_NAME/g' connect.sh`
+- Replace the text `username` with your actual username: `sed -i 's/username/USERNAME/g' connect.sh`
+
 # Connect/Disconnect to work VPN
 - `sudo /home/username/work/Company/staff-vpn-2025/connect.sh`
 - `sudo /home/username/work/Company/staff-vpn-2025/disconnect.sh`
+
+## LDAP
+Replace your username and password in the `ldap` file
 
 # Resources
 ## General VPN and OpenVPN issues
