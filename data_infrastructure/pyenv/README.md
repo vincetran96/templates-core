@@ -4,7 +4,8 @@
 
 ## Add to end of .bashrc (depends on which bash)
 ```
-export PATH="~/.pyenv/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 ```
