@@ -9,7 +9,7 @@
 #!/bin/bash
 set -eo pipefail
 
-log_dir=/data/anhtv/spellchecker/logs
+log_dir=/some/log/dir
 exec >"${log_dir}/cronjob_$(date +'%Y-%m-%dT%H:%M:%S').log" 2>&1
 
 string_can_be_empty=$1
