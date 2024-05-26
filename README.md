@@ -1,3 +1,12 @@
+# Linux commands
+- Bash
+- IO
+- Network
+- Processes
+- Security
+- System
+- Text
+
 # Data infrastructure
 - airflow
 - aws
