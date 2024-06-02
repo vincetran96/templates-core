@@ -4,7 +4,9 @@ from typing import List
 
 
 def prefix_sum(mat: List[List[int]]):
-    """Prefix sum"""
+    """Prefix sum;
+    We use DP
+    """
     n_rows = len(mat)
     n_cols = len(mat[0])
     dp = [[0 for _ in range(n_cols)] for _ in range(n_rows)]
