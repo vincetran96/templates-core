@@ -27,3 +27,6 @@
     - `docker volume rm $(docker volume ls -qf dangling=true)`
     - `sudo rm -rf /home/USERNAME/data/nextcloud`
     - `sudo rm -rf /home/USERNAME/nextcloud/certs/nextcloud/*`
+
+# Resources
+- https://www.reddit.com/r/Tailscale/comments/104y6nq/docker_tailscale_and_caddy_with_https_a_love_story/
