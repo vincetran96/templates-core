@@ -1,5 +1,9 @@
 # Prerequisites
 https://docs.pi-hole.net/main/prerequisites/
+- If you use Tailscale, no need to worry about
+    - Static IP in **local** network
+    - Set DNS server to be the Pi-hole host in **local** network
+    - Forward ssh port from modem/router in **local** network
 ## Ports (service, port, protocol)
 - `pihole-FTL`, `53`, `TCP/UDP`
 - `lighttpd`, `80`, `TCP`
