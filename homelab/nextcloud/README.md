@@ -3,14 +3,7 @@
 # Prerequisites
 - Tailscale as a native service
 - Pi-hole as a native service, configured to listen on port 53 of this Tailscale host
-- Caddy as a native/Docker service, see [caddy](../caddy/README.md) for details
-- Custom DNS entries (A record) for the FQDN of this Tailscale host/Nextcloud subdomain
-    - `hostname.tailfdc91.ts.net` -> Tailscale IP (`100.XX.XX.XX`)
-    - `nextcloud.hostname.ts` -> Tailscale IP (`100.XX.XX.XX`)
-- Self-signed certificate for the FQDN of this Tailscale host:
-    - Also add certificate(s) if you need to use Nextcloud subdomain
-    - https://stackoverflow.com/questions/70820375/unable-to-obtain-acme-certificate-for-domains-trying-to-setup-https-in-virtual
-    - `openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -sha256 -days 1000 -subj '/CN=nextcloud.hostname.ts'`
+- [Optional] Caddy as a native/Docker service, see [caddy](../caddy/README.md) for details
 
 # Run
 - Check out [Caddyfile](../caddy/Caddyfile) and [docker-compose.yml](docker-compose.yml)
