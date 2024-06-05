@@ -24,4 +24,6 @@ alias gc='git checkout'
 alias gcb='git checkout -b'
 alias gstash='git stash'
 alias dps='docker ps'
+alias dimg='docker image'
+alias dcompose='docker compose'
 ```
