@@ -1,4 +1,4 @@
-nextcloud.hostname.tailfdc91.ts.net {
+nextcloud.hostname:443 {
 	tls /certs/nextcloud/cert.pem /certs/nextcloud/key.pem
 	reverse_proxy 127.0.0.1:11000
 }
