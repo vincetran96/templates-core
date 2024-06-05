@@ -1,8 +1,16 @@
-# Set a static IP for the server
+# Prerequisites
+https://docs.pi-hole.net/main/prerequisites/
+## Ports (service, port, protocol)
+- `pihole-FTL`, `53`, `TCP/UDP`
+- `lighttpd`, `80`, `TCP`
+## Change `lighttpd` port
+- https://discourse.pi-hole.net/t/lighttpd-refuses-to-let-go-of-port-80-on-ipv6-unless-i-edit-lighttpd-conf/69106/3
+- https://discourse.pi-hole.net/t/changing-default-listening-port-of-lighttpd-in-raspberry-pi-os-no-longer-honors-external-conf/62235/4
+- Edit `/etc/lighttpd/lighttpd.conf`, change `server.port` value
+## Set a static IP for the server
 - https://docs.pi-hole.net/main/prerequisites/#ip-addressing
 - Use the modem/router admin interface to set an IP/DHCP reservation
-
-# Set firewall rules for Pi-hole
+## Set firewall rules for Pi-hole
 So that the server allows incoming queries to Pi-hole ports. Example using `ufw`.
 - https://docs.pi-hole.net/main/prerequisites/#ufw
 - IPv4:
@@ -24,10 +32,13 @@ ufw allow 546:547/udp
 # Restart Pi-hole
 https://www.reddit.com/r/pihole/comments/hx04e7/how_do_you_restart_pihole_in_ubuntu_server/
 
+# Check pihole status
+- `sudo systemctl status pihole-FTL`
+
 # Set DNS server (optional)
 - Use the modem/router admin interface to set the Pi-hole server as the DNS server
 - If the Pi-hole server has been set up as the DNS server in the modem, when it is down or disconnects from LAN, all devices in the LAN may **NOT** be able to access internet, because their DNS resolver is not available!
-- To avoid this, we can use Wireguard VPN, see below
+- To avoid this, we can use Wireguard or Tailscale, see below
 
 # Enable remote ssh on the Pi-hole server
 - https://linuxize.com/post/how-to-enable-ssh-on-ubuntu-18-04/
@@ -80,21 +91,9 @@ sudo ufw allow 60023/udp
 
 # Setup Tailscale to block ads outside local network
 - https://tailscale.com/kb/1114/pi-hole/
-- See the `tailscale` dir for more info
-## Prerequisites
-https://docs.pi-hole.net/main/prerequisites/
-### Ports (service, port, protocol)
-- `pihole-FTL`, `53`, `TCP/UDP`
-- `lighttpd`, `80`, `TCP`
-### Change `lighttpd` port
-- https://discourse.pi-hole.net/t/lighttpd-refuses-to-let-go-of-port-80-on-ipv6-unless-i-edit-lighttpd-conf/69106/3
-- https://discourse.pi-hole.net/t/changing-default-listening-port-of-lighttpd-in-raspberry-pi-os-no-longer-honors-external-conf/62235/4
-- Edit `/etc/lighttpd/lighttpd.conf`, change `server.port` value
+- See [tailscale](../tailscale/README.md) for more info about Tailscale
 ## Set Pi-hole server to listen on multiple interfaces
 - https://discourse.pi-hole.net/t/multiple-interfaces/1291/4
 - https://www.reddit.com/r/pihole/comments/59p3h8/comment/d9bcboh/
 - Create a file called `/etc/dnsmasq.d/99-interfaces.conf`
 - Add `interface=tailscale0` to the content
-
-# Check pihole status
-- `sudo systemctl status pihole-FTL`
