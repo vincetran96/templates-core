@@ -1,0 +1,18 @@
+services:
+  caddy:
+    image: caddy:2.8.1
+    restart: always
+    container_name: caddy
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./certs:/certs
+      - ./config:/config
+      - ./data:/data
+      - ./site:/srv
+      - /var/run/tailscale/tailscaled.sock:/var/run/tailscale/tailscaled.sock
+    ports:
+      - "80:80"
+      - "443:443"
+    network_mode: host
+    dns:
+      - "127.0.0.1"

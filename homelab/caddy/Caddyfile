@@ -1,0 +1,10 @@
+nextcloud.hostname.ts {
+	tls /certs/cert.nextcloud.pem /certs/nextcloud/key.nextcloud.pem
+	reverse_proxy 127.0.0.1:11000
+}
+
+pihole.hostname.ts {
+	tls /certs/cert.pihole.pem /certs/key.pihole.pem
+	rewrite * /admin{uri}
+	reverse_proxy 127.0.0.1:60080
+}
