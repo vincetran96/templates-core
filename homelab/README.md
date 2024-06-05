@@ -2,9 +2,12 @@
 - Computer hierarchy (from root)
 - Manpages
 - FAQs (links from external resources)
+- Tailscale
 - Pi-hole
 - Wireguard VPN
 - Netcheck
+- Caddy
+- Nextcloud
 
 # Access homelab server
 ## Using tailscale
