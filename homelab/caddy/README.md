@@ -29,4 +29,5 @@ pihole.hostname.something.unique.ts {
 
 
 # Resources
+- https://www.reddit.com/r/Tailscale/comments/104y6nq/docker_tailscale_and_caddy_with_https_a_love_story/
 - https://caddy.community/t/reverse-proxy-into-docker-container-sub-path/9232/2
