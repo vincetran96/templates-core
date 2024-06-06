@@ -12,8 +12,3 @@
 
 # Tailscale ping another node
 `tailscale ping --verbose=true nodename`
-
-# Tailscale and pi-hole
-https://tailscale.com/kb/1114/pi-hole
-- Start tailscale: `tailscale up --accept-dns=false`
-- See [pi-hole](../pi-hole/README.md)

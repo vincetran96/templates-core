@@ -101,3 +101,5 @@ sudo ufw allow 60023/udp
 - https://www.reddit.com/r/pihole/comments/59p3h8/comment/d9bcboh/
 - Create a file called `/etc/dnsmasq.d/99-interfaces.conf`
 - Add `interface=tailscale0` to the content
+## Start tailscale
+`tailscale up --accept-dns=false`
