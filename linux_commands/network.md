@@ -15,6 +15,9 @@
 # Check resolvectl status
 `sudo resolvectl status`
 
+# Set DNS resolvers for an interface
+`sudo resolvectl dns interface_name 1.1.1.1 1.0.0.1 8.8.8.8 8.8.4.4`
+
 # Check behavior of systemd-resolved 
 - `sudo resolvectl log-level debug` (default is `info`)
 - `journalctl -u systemd-resolved --since "2024-03-26 00:00:00"`
