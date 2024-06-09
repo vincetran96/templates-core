@@ -26,4 +26,5 @@ alias gstash='git stash'
 alias dps='docker ps'
 alias dimg='docker image'
 alias dcompose='docker compose'
+alias lsof-listen='sudo lsof -i -P -n | grep LISTEN'
 ```
