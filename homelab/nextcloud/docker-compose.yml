@@ -9,7 +9,7 @@ services:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
-      - "8080:8080"
+      - "60081:8080"
     environment:
       APACHE_PORT: 11000 # Is needed when running behind a web server or reverse proxy
       APACHE_IP_BINDING: 127.0.0.1 # Should be set when running behind a web server or reverse proxy
