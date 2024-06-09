@@ -103,3 +103,9 @@ sudo ufw allow 60023/udp
 - Add `interface=tailscale0` to the content
 ## Start tailscale
 `tailscale up --accept-dns=false`
+
+# Adlists
+- https://oisd.nl/setup/pihole
+    - https://big.oisd.nl
+- https://github.com/hagezi/dns-blocklists
+    - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/multi.txt
