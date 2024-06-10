@@ -31,6 +31,7 @@ kafka-topics.sh \
 ```
 
 ## Messages
+Produce & consume
 ```
 kafka-console-producer.sh \
     --bootstrap-server localhost:9094 \
