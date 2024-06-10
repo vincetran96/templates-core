@@ -1,0 +1,6 @@
+[Match]
+Name=wlp1s02xyz3
+
+[Network]
+DNS=1.1.1.1
+FallbackDNS=8.8.4.4
