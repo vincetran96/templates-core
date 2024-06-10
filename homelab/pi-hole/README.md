@@ -7,7 +7,7 @@ https://docs.pi-hole.net/main/prerequisites/
 ## Ports (service, port, protocol)
 - `pihole-FTL`, `53`, `TCP/UDP`
 - `lighttpd`, `80`, `TCP`
-## Change `lighttpd` port
+## Change `lighttpd` port (optional)
 - https://discourse.pi-hole.net/t/lighttpd-refuses-to-let-go-of-port-80-on-ipv6-unless-i-edit-lighttpd-conf/69106/3
 - https://discourse.pi-hole.net/t/changing-default-listening-port-of-lighttpd-in-raspberry-pi-os-no-longer-honors-external-conf/62235/4
 - Edit `/etc/lighttpd/lighttpd.conf`, change `server.port` value
@@ -18,20 +18,27 @@ https://docs.pi-hole.net/main/prerequisites/
 So that the server allows incoming queries to Pi-hole ports. Example using `ufw`.
 - https://docs.pi-hole.net/main/prerequisites/#ufw
 - IPv4:
-```
-ufw allow 80/tcp
-ufw allow 53/tcp
-ufw allow 53/udp
-ufw allow 67/tcp
-ufw allow 67/udp
-```
+    ```
+    ufw allow 53/tcp
+    ufw allow 53/udp
+    ufw allow 80/tcp
+    ufw allow 67/tcp
+    ufw allow 67/udp
+    ```
 - IPv6:
-```
-ufw allow 546:547/udp
-```
+    ```
+    ufw allow 546:547/udp
+    ```
 
 # Install Pi-hole
+## As a native service
 `curl -sSL https://install.pi-hole.net | bash`
+## As a Docker service
+- Be aware of any conflicting ports
+    - Including ports 80, 53, 67, etc.
+    - https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#running-pi-hole-docker
+    - https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#installing-on-ubuntu-or-fedora
+- See [docker-compose.yml](docker-compose.yml)
 
 # Restart Pi-hole
 https://www.reddit.com/r/pihole/comments/hx04e7/how_do_you_restart_pihole_in_ubuntu_server/
@@ -54,13 +61,13 @@ https://www.reddit.com/r/pihole/comments/hx04e7/how_do_you_restart_pihole_in_ubu
 - Create keys for the client(s) and make sure the client(s) can log in the server using their respective keys first
 - Open `sudo nano /etc/ssh/sshd_config`
 - Change some settings:
-```
-PasswordAuthentication no
+    ```
+    PasswordAuthentication no
 
-# These are optional
-PermitRootLogin no
-PermitRootLogin prohibit-password
-```
+    # These are optional
+    PermitRootLogin no
+    PermitRootLogin prohibit-password
+    ```
 - Restart ssh
 - `sudo systemctl reload sshd.service`
 - Or `sudo systemctl restart ssh`
@@ -80,18 +87,18 @@ PermitRootLogin prohibit-password
 - Setup wireguard
 - Forward a port (e.g., 60023) in router to port 60023 in the Pi-hole local IP
 - Set firewall rule so the server allows incoming queries to port 60023:
-```
-sudo ufw allow 60023/udp
-```
+    ```
+    sudo ufw allow 60023/udp
+    ```
 - See more in...
     - `wireguard` dir (esp. the DDNS part)
     - `netcheck` dir
 - Add some cron jobs to update DDNS of the router and check internet connection periodically:
-```
-*/5 * * * * /home/userName/duckdns/duck.sh >/dev/null 2>&1
-*/5 * * * * /home/userName/freedns/freedns.sh > /dev/null 2>&1
-@reboot cd /home/userName/netcheck && yes n | ./netcheck.sh &
-```
+    ```
+    */5 * * * * /home/userName/duckdns/duck.sh >/dev/null 2>&1
+    */5 * * * * /home/userName/freedns/freedns.sh > /dev/null 2>&1
+    @reboot cd /home/userName/netcheck && yes n | ./netcheck.sh &
+    ```
 
 # Setup Tailscale to block ads outside local network
 - https://tailscale.com/kb/1114/pi-hole/
