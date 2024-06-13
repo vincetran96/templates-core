@@ -45,14 +45,18 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
 - https://weberc2.github.io/posts/k3s-tailscale.html
 - https://stackoverflow.com/questions/66449289/is-there-any-way-to-bind-k3s-flannel-to-another-interface
 
+
 # Cheatsheets
 ## kubectl
 - https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
 - Forward port
   - `kubectl port-forward service/coin2-kafka-svc 9095:9095`
 
+
 # Tricks
 - Expose traefik dashboard:
   - https://stackoverflow.com/questions/68565048/how-to-expose-traefik-v2-dashboard-in-k3d-k3s-via-configuration/70895373#70895373
 - Docker Compose to Kubernetes
   - https://github.com/kubernetes/kompose?tab=readme-ov-file
+- port vs targetPort
+  - https://stackoverflow.com/questions/49981601/difference-between-targetport-and-port-in-kubernetes-service-definition
