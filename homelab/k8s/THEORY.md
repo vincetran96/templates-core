@@ -2,6 +2,15 @@
 https://kubernetes.io/docs/concepts/overview/
 
 
+# Objects in k8s
+https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+## Labels and selectors
+- Label vs name
+  - https://stackoverflow.com/questions/60027090/what-is-the-difference-between-label-and-selector-in-kubernetes
+  - https://stackoverflow.com/questions/54436623/why-labels-are-mentioned-three-times-in-a-single-deployment
+  - https://serverfault.com/questions/1134929/what-is-the-difference-between-metadata-labels-and-spec-template-metadata-lab
+
+
 # >> Cluster architecture
 ![alt text](image.png)
 https://kubernetes.io/docs/concepts/architecture/

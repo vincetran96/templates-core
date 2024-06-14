@@ -4,21 +4,37 @@ metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.kafka.yml
     kompose.version: 1.34.0 (cbf2835db)
+  namespace: coin2
+  name: kafka-svc
   labels:
-    io.kompose.service: coin2-kafka
-  name: coin2-kafka-svc
+    app: kafka
 spec:
   type: NodePort
   selector:
-    io.kompose.service: coin2-kafka
+    app: kafka
   ports:
     - name: "9095"
       port: 9095
       targetPort: kafka0-svc
-      nodePort: 30095
     - name: "9096"
       port: 9096
       targetPort: kafka1-svc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.kafka.yml
+    kompose.version: 1.34.0 (cbf2835db)
+  namespace: coin2
+  name: kafka-ui
+  labels:
+    app: kafka
+spec:
+  type: NodePort
+  selector:
+    app: kafka
+  ports:
     - name: "8080"
       port: 8080
       targetPort: kafkaui-svc

@@ -51,6 +51,8 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
 - https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
 - Forward port
   - `kubectl port-forward service/coin2-kafka-svc 9095:9095`
+- Create a namespace
+  - `kubectl create ns NAMESPACE`
 
 
 # Tricks
@@ -60,3 +62,5 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
   - https://github.com/kubernetes/kompose?tab=readme-ov-file
 - port vs targetPort
   - https://stackoverflow.com/questions/49981601/difference-between-targetport-and-port-in-kubernetes-service-definition
+- Expose low-number ports to host
+  - https://stackoverflow.com/questions/61787577/how-to-expose-low-numbered-ports-in-the-kubernetes-mini-cluster-that-comes-with/61795178#61795178
