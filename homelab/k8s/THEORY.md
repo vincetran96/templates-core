@@ -21,6 +21,9 @@ https://kubernetes.io/docs/concepts/architecture/controller/
 # >> Containers
 ## Images
 Image pull policy: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
+- IfNotPresent
+- Always
+- Never
 ## Container environment
 https://kubernetes.io/docs/concepts/containers/container-environment/
 - **Services have dedicated IP addresses** and are available to the Container **via DNS**, if DNS addon is enabled.

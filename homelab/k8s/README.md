@@ -1,7 +1,7 @@
 # Setup
 ## Server/Master
 About token: https://docs.k3s.io/cli/token#server
-### Install
+### Install (with K3s)
 ```bash
 export TAILSCALE_IP=XX.XX.XX.XX
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --write-kubeconfig $HOME/.kube/config --write-kubeconfig-mode 644 --flannel-iface tailscale0 --node-ip $TAILSCALE_IP --node-external-ip $TAILSCALE_IP" K3S_TOKEN=12345 sh -
@@ -53,6 +53,8 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
   - `kubectl port-forward service/coin2-kafka-svc 9095:9095`
 - Create a namespace
   - `kubectl create ns NAMESPACE`
+- Update/replace an existing configMap
+  - `kubectl replace -f some-configmap.yaml`
 
 
 # Tricks
@@ -64,3 +66,14 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
   - https://stackoverflow.com/questions/49981601/difference-between-targetport-and-port-in-kubernetes-service-definition
 - Expose low-number ports to host
   - https://stackoverflow.com/questions/61787577/how-to-expose-low-numbered-ports-in-the-kubernetes-mini-cluster-that-comes-with/61795178#61795178
+- Environment variables and configMap and Secret
+  - https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+  - https://gist.github.com/troyharvey/4506472732157221e04c6b15e3b3f094
+- Convert local docker image to containerd image
+  - https://stackoverflow.com/questions/69981852/how-to-use-local-docker-images-in-kubernetes-deployments-not-minikube
+  - https://github.com/k3s-io/k3s/issues/213
+- Connect from Pod to host
+  - https://stackoverflow.com/questions/66290862/kubernetes-pod-talking-to-a-localhost-port
+  - https://github.com/kubernetes-sigs/kind/issues/1200#issuecomment-1304855791
+- Keep a container running
+  - https://stackoverflow.com/questions/31870222/how-can-i-keep-a-container-running-on-kubernetes
