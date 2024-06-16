@@ -66,7 +66,8 @@ kafka-console-consumer.sh \
     --group group0 \
     --from-beginning \
     --property "parse.key=true" \
-    --property "key.separator=:"
+    --property "key.separator=:" \
+    --property print.timestamp=true
 ```
 
 **Reset offsets**
