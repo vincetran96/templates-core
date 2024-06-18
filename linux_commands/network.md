@@ -11,6 +11,8 @@
 - `resolvectl query internal.host.com`
 ## Per-interface query
 - `resolvectl query example.com -i interface_name`
+## Make a query to a specific DNS server
+- `nslookup somewhere.com some.dns.server`
 
 # Check resolvectl status
 `sudo resolvectl status`
