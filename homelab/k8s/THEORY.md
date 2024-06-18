@@ -71,6 +71,10 @@ https://kubernetes.io/docs/concepts/workloads/controllers/
 https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 - You must specify an appropriate selector and Pod template labels in a Deployment (in this case, app: nginx).
 - Do not overlap labels or selectors with other controllers (including other Deployments and StatefulSets).
+### DaemonSet
+https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+- HostPort vs NodePort
+  - https://www.reddit.com/r/kubernetes/comments/w757ju/hostport_vs_nodeport/
 ## Autoscaling workloads
 https://kubernetes.io/docs/concepts/workloads/autoscaling/
 ## Managing workloads
@@ -90,6 +94,11 @@ https://kubernetes.io/docs/concepts/services-networking/#the-kubernetes-network-
   - This means that containers within a Pod can all reach each other's ports on `localhost`.
   - This is called the "IP-per-pod" model.
 - The Pod itself is **blind to the existence or non-existence** of host ports.
+
+
+# Configuration
+## Configuration best practices
+https://kubernetes.io/docs/concepts/configuration/overview/
 
 
 # >> Services

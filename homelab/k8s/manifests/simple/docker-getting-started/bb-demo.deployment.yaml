@@ -8,6 +8,8 @@ spec:
    selector:
       matchLabels:
          bb: web
+   strategy:
+    type: Recreate
    template:
       metadata:
          labels:
