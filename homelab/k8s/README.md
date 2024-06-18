@@ -15,6 +15,9 @@ export TAILSCALE_SERVER_IP=XX.XX.XX.XX
 export TAILSCALE_IP=YY.YY.YY.YY
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="agent --server https://$TAILSCALE_SERVER_IP:6443 --token K10c3d7187aa06c30407582f2582c579ea69f47903833a575f3bb00f04077c2dce4::server:12345 --flannel-iface tailscale0 --node-ip $TAILSCALE_IP --node-external-ip $TAILSCALE_IP" sh -s -
 ```
+## Packaged components
+- https://docs.k3s.io/installation/packaged-components
+- Location: `/var/lib/rancher/k3s/server/manifests`
 
 # Configuration file
 `/etc/rancher/k3s/config.yaml`
