@@ -34,6 +34,7 @@ cluster-init: true
 ```
 
 # Systemd configuration file
+To change things when setting up K3s
 ## Server
 `cat /etc/systemd/system/k3s.service`
 ## Agent
@@ -47,6 +48,22 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
 # Use k3s with Tailscale
 - https://weberc2.github.io/posts/k3s-tailscale.html
 - https://stackoverflow.com/questions/66449289/is-there-any-way-to-bind-k3s-flannel-to-another-interface
+
+
+# Traefik
+## Install with Helm
+```bash
+helm install --namespace=traefik-system --values=~/.kube/traefik/traefik-values.yaml traefik traefik/traefik
+```
+## Expose dashboard
+- `kubectl -n traefik-system port-forward deployments/traefik 9000:9000`
+- Or `kubectl apply -f ~/.kube/traefik/traefik-dashboard.yaml`
+## Values file
+- https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+## Uninstall
+```bash
+helm uninstall -n traefik-system traefik traefik/traefik
+```
 
 
 # Cheatsheets
@@ -80,3 +97,11 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
   - https://github.com/kubernetes-sigs/kind/issues/1200#issuecomment-1304855791
 - Keep a container running
   - https://stackoverflow.com/questions/31870222/how-can-i-keep-a-container-running-on-kubernetes
+## Traefik
+- Values file when installing with Helm
+  - https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+- Dynamic configuration custom resource
+  - https://doc.traefik.io/traefik/reference/dynamic-configuration/kubernetes-crd/#definitions
+## Metallb
+- IP address sharing
+  - https://metallb.universe.tf/usage/#ip-address-sharing

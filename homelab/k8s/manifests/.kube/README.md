@@ -1,1 +1,1 @@
-Put this in ~/.kube
+Put this in `$HOME`

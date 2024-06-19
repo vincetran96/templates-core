@@ -94,6 +94,9 @@ https://kubernetes.io/docs/concepts/services-networking/#the-kubernetes-network-
   - This means that containers within a Pod can all reach each other's ports on `localhost`.
   - This is called the "IP-per-pod" model.
 - The Pod itself is **blind to the existence or non-existence** of host ports.
+## K8s and Traefik
+- Ports, pods connectivity
+  - https://github.com/k3s-io/k3s/issues/1414#issuecomment-1681112614
 
 
 # Configuration
