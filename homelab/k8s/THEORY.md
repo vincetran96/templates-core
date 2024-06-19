@@ -99,6 +99,9 @@ https://kubernetes.io/docs/concepts/services-networking/#the-kubernetes-network-
   - https://github.com/k3s-io/k3s/issues/1414#issuecomment-1681112614
 
 
+# Storage
+
+
 # Configuration
 ## Configuration best practices
 https://kubernetes.io/docs/concepts/configuration/overview/
