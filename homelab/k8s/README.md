@@ -55,7 +55,15 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
 ```bash
 helm install --namespace=traefik-system --values=~/.kube/traefik/traefik-values.yaml traefik traefik/traefik
 ```
-## Expose dashboard
+## Apply custom resources
+```bash
+kubectl -n traefik-system apply -f ~/.kube/traefik/traefik-crd-definition-v1.yaml
+kubectl -n default apply -f ~/.kube/traefik/traefik-crd-resource.yaml
+```
+## Dashboard
+### Visit dashboard
+- Go to `TAILSCALE_IP:9000/dashboard/#/`
+### Expose dashboard
 - `kubectl -n traefik-system port-forward deployments/traefik 9000:9000`
 - Or `kubectl apply -f ~/.kube/traefik/traefik-dashboard.yaml`
 ## Values file
