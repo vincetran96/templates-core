@@ -53,21 +53,30 @@ sudo systemctl restart <k3s on master node or k3s-agent on worker node>
 # Traefik
 ## Install with Helm
 ```bash
-helm install --namespace=traefik-system --values=~/.kube/traefik/traefik-values.yaml traefik traefik/traefik
+helm install --namespace=traefik-system --values=$HOME/.kube/traefik/traefik-values.yaml traefik traefik/traefik
 ```
 ## Apply custom resources
+At this point, I'm not sure which one runs first
 ```bash
-kubectl -n traefik-system apply -f ~/.kube/traefik/traefik-crd-definition-v1.yaml
-kubectl -n default apply -f ~/.kube/traefik/traefik-crd-resource.yaml
+kubectl -n default apply -f $HOME/.kube/traefik/traefik-crd-resource.yaml
+kubectl -n traefik-system apply -f $HOME/.kube/traefik/traefik-crd-definition-v1.yaml
 ```
+Source:
+- https://github.com/traefik/traefik/blob/v3.0/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+- https://github.com/traefik/traefik/blob/v3.0/docs/content/reference/dynamic-configuration/kubernetes-crd-resource.yml
+## Update values file and restart
+In case the values file is changed, etc.
+```bash
+helm upgrade --install --namespace=traefik-system --values=$HOME/.kube/traefik/traefik-values.yaml traefik traefik/traefik
+```
+## Values file
+- https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
 ## Dashboard
 ### Visit dashboard
 - Go to `TAILSCALE_IP:9000/dashboard/#/`
 ### Expose dashboard
 - `kubectl -n traefik-system port-forward deployments/traefik 9000:9000`
-- Or `kubectl apply -f ~/.kube/traefik/traefik-dashboard.yaml`
-## Values file
-- https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+- Or `kubectl apply -f $HOME/.kube/traefik/traefik-dashboard.yaml`
 ## Uninstall
 ```bash
 helm uninstall -n traefik-system traefik traefik/traefik
@@ -106,8 +115,6 @@ helm uninstall -n traefik-system traefik traefik/traefik
 - Keep a container running
   - https://stackoverflow.com/questions/31870222/how-can-i-keep-a-container-running-on-kubernetes
 ## Traefik
-- Values file when installing with Helm
-  - https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
 - Dynamic configuration custom resource
   - https://doc.traefik.io/traefik/reference/dynamic-configuration/kubernetes-crd/#definitions
 ## Metallb
