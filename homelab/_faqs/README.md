@@ -3,3 +3,4 @@
 - resolv.conf vs stub-resolv.conf: https://www.reddit.com/r/linux_programming/comments/14jijag/when_do_you_use_systemds_resolvconf_instead_of/
 - /etc/resolv.conf and 127.0.0.53: https://unix.stackexchange.com/questions/612416/why-does-etc-resolv-conf-point-at-127-0-0-53
 - systemd dns behavior: https://askubuntu.com/questions/1401547/how-can-i-identify-detailed-dns-behavior-with-systemd
+- disable DNS processing in NetworkManager: https://andrea.corbellini.name/2020/04/28/ubuntu-global-dns/#step-2-disable-dns-processing-in-networkmanager
