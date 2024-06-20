@@ -1,4 +1,12 @@
 # Setup
+## Prerequisites
+Create a file named `/etc/ufw/applications.d/k3s` with the following content (see [this section](../_computer_hierarchy/etc/ufw/applications.d/))
+```conf
+[K3s]
+title=K3s ports
+description=Required by K3s: https://docs.k3s.io/installation/requirements#networking
+ports=2379:2380/tcp|6443/tcp|8472/udp|10250/tcp|51820/udp|51821/udp|5001/tcp
+```
 ## Server/Master
 About token: https://docs.k3s.io/cli/token#server
 ### Install (with K3s)
