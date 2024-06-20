@@ -107,6 +107,11 @@ https://kubernetes.io/docs/concepts/services-networking/#the-kubernetes-network-
 https://kubernetes.io/docs/concepts/configuration/overview/
 
 
+# Configure pods
+## Assign memory resources and limits
+https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/
+
+
 # >> Services
 https://kubernetes.io/docs/concepts/services-networking/service/
 ## Service types
