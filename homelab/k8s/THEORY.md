@@ -100,6 +100,8 @@ https://kubernetes.io/docs/concepts/services-networking/#the-kubernetes-network-
 
 
 # Storage
+## Storage classes
+https://kubernetes.io/docs/concepts/storage/storage-classes/
 
 
 # Configuration
@@ -116,3 +118,7 @@ https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/
 https://kubernetes.io/docs/concepts/services-networking/service/
 ## Service types
 https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+
+
+# Kubernetes API Reference
+https://kubernetes.io/docs/reference/kubernetes-api/
