@@ -1,3 +1,4 @@
+# Pi-hole with Traefik
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -46,10 +47,10 @@ spec:
           resources:
             requests:
               memory: 128Mi
-              cpu: 100m
+              cpu: 0.1
             limits:
               memory: 256Mi
-              cpu: 1
+              cpu: 0.5
       restartPolicy: Always
       dnsPolicy: ClusterFirst
 ---
