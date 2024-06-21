@@ -1,0 +1,19 @@
+# Used in K3s
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: pihole
+  name: pihole-pvc
+  labels:
+    app: pihole
+  annotations:
+    volumeType: local
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 128Mi
+    limits:
+      storage: 256Mi
