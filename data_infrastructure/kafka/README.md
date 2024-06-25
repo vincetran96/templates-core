@@ -8,7 +8,7 @@
 
 # Commands
 ## Topics
-```
+```bash
 kafka-topics.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
@@ -17,22 +17,29 @@ kafka-topics.sh \
     --replication-factor 2
 ```
 
-```
+```bash
 kafka-topics.sh \
     --bootstrap-server localhost:9094 \
     --list
 ```
 
-```
+```bash
 kafka-topics.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
     --describe
 ```
 
+```bash
+kafka-topics.sh \
+    --bootstrap-server localhost:9094 \
+    --delete \
+    --topic topic0
+```
+
 ## Messages
 Produce & consume
-```
+```bash
 kafka-console-producer.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
@@ -40,7 +47,7 @@ kafka-console-producer.sh \
     --property "key.separator=:"
 ```
 
-```
+```bash
 kafka-console-consumer.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
@@ -49,7 +56,7 @@ kafka-console-consumer.sh \
     --property "key.separator=:"
 ```
 
-```
+```bash
 kafka-console-consumer.sh \
     --bootstrap-server localhost:9094 \
     --consumer.config config/config.example.properties \
@@ -59,7 +66,7 @@ kafka-console-consumer.sh \
 
 ## Consumer group
 **Create consumer group**
-```
+```bash
 kafka-console-consumer.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
@@ -71,7 +78,7 @@ kafka-console-consumer.sh \
 ```
 
 **Reset offsets**
-```
+```bash
 kafka-consumer-groups.sh \
     --bootstrap-server localhost:9094 \
     --topic topic0 \
@@ -81,7 +88,7 @@ kafka-consumer-groups.sh \
 ```
 
 **Describe offsets, etc. of consumer groups**
-```
+```bash
 kafka-consumer-groups.sh \
     --bootstrap-server localhost:9094 \
     --describe \

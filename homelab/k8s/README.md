@@ -100,6 +100,8 @@ helm uninstall -n traefik-system traefik traefik/traefik
   - `kubectl create ns NAMESPACE`
 - Update/replace an existing configMap
   - `kubectl replace -f some-configmap.yaml`
+- Restart pods
+  - `kubectl rollout restart deployment DEPLOYMENT -n NAMESPACE`
 - Get volumes
   - `kubectl get pv`
 
