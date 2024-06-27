@@ -1,0 +1,4 @@
+[Kafka]
+title=Kafka ports
+description=For access into Kafka Docker
+ports=9200:9204/udp
