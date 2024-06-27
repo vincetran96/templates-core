@@ -29,4 +29,5 @@ Create custom UFW configs in `/etc/ufw/applications.d` (see [this](../_computer_
 
 
 # After things are up
-Check datasources status: http://TAILSCALE_IP:9090/targets
+- Check exported metrics of a service: http://TAILSCALE_IP:SERVICE_PROMETHEUS_PORT/metrics
+- Check Prometheus datasources' status: http://TAILSCALE_IP:9090/targets
