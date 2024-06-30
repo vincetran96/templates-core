@@ -1,0 +1,158 @@
+services:
+  coin2-kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: coin2-kafka-ui
+    restart: always
+    ports:
+      - "60094:8080"
+    environment:
+      DYNAMIC_CONFIG_ENABLED: true
+      KAFKA_CLUSTERS_0_NAME: ${KAFKA_CLUSTER_ID}
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: coin2-kafka-0:9092,coin2-kafka-1:9092,coin2-kafka-2:9092
+    depends_on:
+      - coin2-kafka-0
+      - coin2-kafka-1
+      - coin2-kafka-2
+
+  coin2-kafka-0:
+    image: docker.io/bitnami/kafka:3.6.2
+    container_name: coin2-kafka-0
+    hostname: coin2-kafka-0
+    restart: always
+    ports:
+      - "9094:9094"
+    environment:
+      # KRaft settings
+      KAFKA_CFG_NODE_ID: 0
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@coin2-kafka-0:9093,1@coin2-kafka-1:9093,2@coin2-kafka-2:9093
+      KAFKA_KRAFT_CLUSTER_ID: ${KAFKA_CLUSTER_ID}
+      # Listeners
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://:9092,EXTERNAL://${KAFKA_HOST}:9094  # Use KAFKA_HOST so Pods can connect
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # JVM params
+      # KAFKA_OPTS: -javaagent:/usr/share/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9200:/usr/share/jmx_exporter/kafka-broker.yml
+    # volumes:
+    #   - ./jmx-exporter:/usr/share/jmx_exporter/
+
+  coin2-kafka-1:
+    image: docker.io/bitnami/kafka:3.6.2
+    container_name: coin2-kafka-1
+    hostname: coin2-kafka-1
+    restart: always
+    ports:
+      - "9095:9095"
+    environment:
+      # KRaft settings
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@coin2-kafka-0:9093,1@coin2-kafka-1:9093,2@coin2-kafka-2:9093
+      KAFKA_KRAFT_CLUSTER_ID: ${KAFKA_CLUSTER_ID}
+      # Listeners
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9095
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://:9092,EXTERNAL://${KAFKA_HOST}:9095  # Use KAFKA_HOST so Pods can connect
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # JVM params
+      # KAFKA_OPTS: -javaagent:/usr/share/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9201:/usr/share/jmx_exporter/kafka-broker.yml
+    # volumes:
+    #   - ./jmx-exporter:/usr/share/jmx_exporter/
+
+  coin2-kafka-2:
+    image: docker.io/bitnami/kafka:3.6.2
+    container_name: coin2-kafka-2
+    hostname: coin2-kafka-2
+    restart: always
+    ports:
+      - "9096:9096"
+    environment:
+      # KRaft settings
+      KAFKA_CFG_NODE_ID: 2
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@coin2-kafka-0:9093,1@coin2-kafka-1:9093,2@coin2-kafka-2:9093
+      KAFKA_KRAFT_CLUSTER_ID: ${KAFKA_CLUSTER_ID}
+      # Listeners
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9096
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://:9092,EXTERNAL://${KAFKA_HOST}:9096  # Use KAFKA_HOST so Pods can connect
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # JVM params
+      # KAFKA_OPTS: -javaagent:/usr/share/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9202:/usr/share/jmx_exporter/kafka-broker.yml
+    # volumes:
+    #   - ./jmx-exporter:/usr/share/jmx_exporter/
+
+  coin2-kafka-minion:
+    image: redpandadata/kminion:v2.2.8
+    container_name: coin2-kafka-minion
+    hostname: coin2-kafka-minion
+    restart: always
+    depends_on:
+      - coin2-kafka-0
+      - coin2-kafka-1
+      - coin2-kafka-2
+    ports:
+      - "9200:9200"
+    environment:
+      CONFIG_FILEPATH: /opt/kminion/kminion-config.yaml
+    volumes:
+      - ./kminion:/opt/kminion/
+    
+
+  # schema-registry:
+  #   image: confluentinc/cp-schema-registry:7.5.1
+  #   hostname: schema-registry
+  #   depends_on:
+  #     - coin2-kafka-0
+  #     - coin2-kafka-1
+  #     - coin2-kafka-2
+  #   ports:
+  #     - "8081:8081"
+  #     - "9203:9203"
+  #   environment:
+  #     SCHEMA_REGISTRY_HOST_NAME: schema-registry
+  #     SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "coin2-kafka-0:9092,coin2-kafka-1:9092,coin2-kafka-2:9092"
+  #     SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+  #     SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+  #     SCHEMA_REGISTRY_JMX_OPTS: -javaagent:/usr/share/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9203:/usr/share/jmx_exporter/confluent_schemaregistry.yml
+  #   volumes:
+  #     - ./jmx-exporter:/usr/share/jmx_exporter/
+
+  # connect:
+  #   image: cnfldemos/cp-server-connect-datagen:0.6.2-7.5.0
+  #   hostname: connect
+  #   depends_on:
+  #     - coin2-kafka-0
+  #     - coin2-kafka-1
+  #     - coin2-kafka-2
+  #     - schema-registry
+  #   ports:
+  #     - "8083:8083"
+  #     - "9204:9204"
+  #   environment:
+  #     CONNECT_BOOTSTRAP_SERVERS: "coin2-kafka-0:9092,coin2-kafka-1:9092,coin2-kafka-2:9092"
+  #     CONNECT_REST_ADVERTISED_HOST_NAME: connect
+  #     CONNECT_GROUP_ID: compose-connect-group
+  #     CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
+  #     CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 2
+  #     CONNECT_OFFSET_FLUSH_INTERVAL_MS: 10000
+  #     CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
+  #     CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 2
+  #     CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
+  #     CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 2
+  #     CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+  #     CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+  #     CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+  #     CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-7.3.1.jar
+  #     CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+  #     CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+  #     CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+  #     CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
+  #     KAFKA_JMX_OPTS: -javaagent:/usr/share/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9204:/usr/share/jmx_exporter/kafka-connect.yml
+  #   volumes:
+  #     - "./schemas:/app/schemas"
+  #     - ./jmx-exporter:/usr/share/jmx_exporter/
