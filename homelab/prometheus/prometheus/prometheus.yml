@@ -18,8 +18,8 @@ alerting:
 
 scrape_configs:
   - job_name: kafka
-    scrape_interval: 1m
-    scrape_timeout: 1m
+    scrape_interval: 10s
+    scrape_timeout: 10s
     scheme: http
     tls_config:
       insecure_skip_verify: true
@@ -27,27 +27,25 @@ scrape_configs:
       # - targets: ["kafka-1:9200", "kafka-2:9200", "kafka-3:9200"]
       - targets:
         - "TAILSCALE_IP:9200"
-        - "TAILSCALE_IP:9201"
-        - "TAILSCALE_IP:9202"
         labels:
-          env: "dev"
+          env: "test"
 
-  - job_name: kafka-schema-registry
-    scrape_interval: 30s
-    scrape_timeout: 30s
-    metrics_path: /metrics
-    scheme: http
-    static_configs:
-      # - targets: ["schema-registry:9200"]
-      - targets:
-        - "TAILSCALE_IP:9203"
+  # - job_name: kafka-schema-registry
+  #   scrape_interval: 30s
+  #   scrape_timeout: 30s
+  #   metrics_path: /metrics
+  #   scheme: http
+  #   static_configs:
+  #     # - targets: ["schema-registry:9200"]
+  #     - targets:
+  #       - "TAILSCALE_IP:9203"
 
-  - job_name: kafka-connect
-    scrape_interval: 30s
-    scrape_timeout: 30s
-    metrics_path: /metrics
-    scheme: http
-    static_configs:
-      # - targets: ["connect:9200"]
-      - targets:
-        - "TAILSCALE_IP:9204"
+  # - job_name: kafka-connect
+  #   scrape_interval: 30s
+  #   scrape_timeout: 30s
+  #   metrics_path: /metrics
+  #   scheme: http
+  #   static_configs:
+  #     # - targets: ["connect:9200"]
+  #     - targets:
+  #       - "TAILSCALE_IP:9204"
