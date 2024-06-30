@@ -7,6 +7,7 @@ title=K3s ports
 description=Required by K3s: https://docs.k3s.io/installation/requirements#networking
 ports=2379:2380/tcp|6443/tcp|8472/udp|10250/tcp|51820/udp|51821/udp|5001/tcp
 ```
+This allows clients to talk to the server.
 ## Server/Master
 About token: https://docs.k3s.io/cli/token#server
 ### Install (with K3s)
